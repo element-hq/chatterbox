@@ -1,0 +1,4 @@
+{
+    "homeserver": "http://localhost:8008",
+    "auto_join_room": "!nXJtsUatHBGyIYfyYw:matrix.org"
+}
