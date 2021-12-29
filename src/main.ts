@@ -1,56 +1,45 @@
-import {
-    Platform,
-    Client,
-    LoadStatus,
-    createNavigation,
-    createRouter,
-    RoomViewModel,
-    TimelineView
-} from "hydrogen-view-sdk";
-import assetPaths from "hydrogen-view-sdk/paths/vite";
-import "hydrogen-view-sdk/style.css";
+import { Hydrogen } from "./Hydrogen";
+import type { IChatterboxConfig } from "./types/IChatterboxConfig";
+
+async function fetchConfig(): Promise<IChatterboxConfig> {
+    const root = document.querySelector("#chatterbox") as HTMLDivElement;
+    if (!root) {
+        throw new Error("No element with id as 'chatterbox' found!");
+    }
+
+    const configLink = root?.dataset.configLink;
+    if (!configLink) {
+        throw new Error("Root element does not have config specified");
+    }
+
+    const config: IChatterboxConfig = await (await fetch(configLink)).json();
+    return config;
+}
 
 async function main() {
-    const app = document.querySelector<HTMLDivElement>('#app')!
-    const config = {};
-    const platform = new Platform(app, assetPaths, config, { development: import.meta.env.DEV });
-    const navigation = createNavigation();
-    platform.setNavigation(navigation);
-    const urlRouter = createRouter({
-        navigation: navigation,
-        history: platform.history
-    });
-    urlRouter.attach();
-    const client = new Client(platform);
+    const root = document.querySelector("#chatterbox") as HTMLDivElement;
+    const { homeserver } = await fetchConfig();
+    const hydrogen = new Hydrogen(homeserver, root);
+    const username = generateRandomString(7);
+    const password = generateRandomString(10);
+    console.log(`Attempting to register with username = ${username} and password = ${password}`);
+    await hydrogen.register(username, password, "Chatterbox");
+    console.log("Registration done"); 
+    console.log("Attempting to login with same credentials");
+    await hydrogen.login(username, password);
+    console.log("Login successful");
 
-    const loginOptions = await client.queryLogin("matrix.org").result;
-    client.startWithLogin(loginOptions.password("foobaraccount", "UzmiRif6UnHqp6s"));
 
-    await client.loadStatus.waitFor((status: string) => {
-        return status === LoadStatus.Ready ||
-            status === LoadStatus.Error ||
-            status === LoadStatus.LoginFailed;
-    }).promise;
+}
 
-    if (client.loginFailure) {
-        alert("login failed: " + client.loginFailure);
-    } else if (client.loadError) {
-        alert("load failed: " + client.loadError.message);
-    } else {
-        const {session} = client;
-        // looks for room corresponding to #element-dev:matrix.org, assuming it is already joined
-        const room = session.rooms.get("!nXJtsUatHBGyIYfyYw:matrix.org");
-        const vm = new RoomViewModel({
-            room,
-            ownUserId: session.userId,
-            platform,
-            urlCreator: urlRouter,
-            navigation,
-        });
-        await vm.load();
-        const view = new TimelineView(vm.timelineViewModel);
-        app.appendChild(view.mount());
+function generateRandomString(length: number): string {
+    let result = "";
+    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
+    var charactersLength = characters.length;
+    for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
+    return result;
 }
 
 main();
