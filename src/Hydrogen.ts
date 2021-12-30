@@ -46,12 +46,11 @@ export class Hydrogen {
         }
     }
 
-    async mountRoom(roomId: string) {
-        const session = this._client.session;
-        const room = session.rooms.get(roomId);
+    async showRoom(roomId: string) {
+        const room = this._session.rooms.get(roomId) ?? await this._joinRoom(roomId);
         const vm = new RoomViewModel({
             room,
-            ownUserId: session.userId,
+            ownUserId: this._session.userId,
             platform: this._platform,
             urlCreator: this._urlRouter,
             navigation: this._navigation,
@@ -60,4 +59,29 @@ export class Hydrogen {
         const view = new TimelineView(vm.timelineViewModel);
         this._container.appendChild(view.mount());
     }
+
+    private async _joinRoom(roomId: string): Promise<any> {
+        await this._session.joinRoom(roomId);
+        // even though we've joined the room, we need to wait till the next sync for the actual room
+        await this._waitForRoomFromSync(roomId);
+        return this._session.rooms.get(roomId);
+
+    }
+
+    private _waitForRoomFromSync(roomId: string): Promise<void> {
+        let resolve: () => void;
+        const promise: Promise<void> = new Promise(r => { resolve = r; })
+        const subscription = {
+            onAdd: (_: string, value: {id: string}) => {
+                if (value.id === roomId) {
+                    this._session.rooms.unsubscribe(subscription);
+                    resolve();
+                }
+            },
+        };
+        this._session.rooms.subscribe(subscription);
+        return promise;
+    }
+
+    private get _session() { return this._client.session; }
 }

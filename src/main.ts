@@ -18,7 +18,7 @@ async function fetchConfig(): Promise<IChatterboxConfig> {
 
 async function main() {
     const root = document.querySelector("#chatterbox") as HTMLDivElement;
-    const { homeserver } = await fetchConfig();
+    const { homeserver, auto_join_room } = await fetchConfig();
     const hydrogen = new Hydrogen(homeserver, root);
     const username = generateRandomString(7);
     const password = generateRandomString(10);
@@ -28,8 +28,9 @@ async function main() {
     console.log("Attempting to login with same credentials");
     await hydrogen.login(username, password);
     console.log("Login successful");
-
-
+    console.log("Attempting to mount Timeline");
+    await hydrogen.showRoom(auto_join_room);
+    console.log("Mounted Timeline");
 }
 
 function generateRandomString(length: number): string {
