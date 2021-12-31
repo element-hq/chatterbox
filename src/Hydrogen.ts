@@ -1,4 +1,4 @@
-import { Platform, Client, LoadStatus, createNavigation, createRouter, RoomViewModel, TimelineView, } from "hydrogen-view-sdk";
+import { Platform, Client, LoadStatus, createNavigation, createRouter, RoomViewModel, TimelineView, ComposerViewModel, MessageComposer } from "hydrogen-view-sdk";
 import assetPaths from "hydrogen-view-sdk/paths/vite";
 import "hydrogen-view-sdk/style.css";
 import { IMatrixClient } from "./types/IMatrixClient";
@@ -48,16 +48,19 @@ export class Hydrogen implements IMatrixClient {
 
     async showRoom(roomId: string): Promise<void> {
         const room = this._session.rooms.get(roomId) ?? await this._joinRoom(roomId);
-        const vm = new RoomViewModel({
+        const roomVm = new RoomViewModel({
             room,
             ownUserId: this._session.userId,
             platform: this._platform,
             urlCreator: this._urlRouter,
             navigation: this._navigation,
         });
-        await vm.load();
-        const view = new TimelineView(vm.timelineViewModel);
-        this._container.appendChild(view.mount());
+        await roomVm.load();
+        const roomView = new TimelineView(roomVm.timelineViewModel);
+        this._container.appendChild(roomView.mount());
+        const composerVm = new ComposerViewModel(roomVm);
+        const composerView = new MessageComposer(composerVm);
+        this._container.appendChild(composerView.mount());
     }
 
     /**
