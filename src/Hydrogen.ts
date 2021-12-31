@@ -1,13 +1,14 @@
 import { Platform, Client, LoadStatus, createNavigation, createRouter, RoomViewModel, TimelineView, } from "hydrogen-view-sdk";
 import assetPaths from "hydrogen-view-sdk/paths/vite";
 import "hydrogen-view-sdk/style.css";
+import { IMatrixClient } from "./types/IMatrixClient";
 
-export class Hydrogen {
+export class Hydrogen implements IMatrixClient {
     private readonly _homeserver: string;
-    private _platform: Record<string, any>;
-    private _client: Record<string, any>;
-    private _urlRouter: Record<string, any>;
-    private _navigation: Record<string, any>;
+    private _platform: Platform;
+    private _client: Client;
+    private _urlRouter: ReturnType<createRouter>;
+    private _navigation: ReturnType<createNavigation>;
     private _container: HTMLDivElement;
 
     constructor(homeserver: string, container: HTMLDivElement) {
@@ -21,15 +22,14 @@ export class Hydrogen {
         this._client = new Client(this._platform);
     }
 
-    async register(username: string, password: string, initialDeviceDisplayName: string) {
+    async register(username: string, password: string, initialDeviceDisplayName: string): Promise<void> {
         let stage = await this._client.startRegistration(this._homeserver, username, password, initialDeviceDisplayName);
         while (stage !== true) {
             stage = await stage.complete();
         }
-        return stage;
     }
 
-    async login(username: string, password: string) {
+    async login(username: string, password: string): Promise<void> {
         const loginOptions = await this._client.queryLogin(this._homeserver).result;
         this._client.startWithLogin(loginOptions.password(username, password));
 
@@ -46,7 +46,7 @@ export class Hydrogen {
         }
     }
 
-    async showRoom(roomId: string) {
+    async showRoom(roomId: string): Promise<void> {
         const room = this._session.rooms.get(roomId) ?? await this._joinRoom(roomId);
         const vm = new RoomViewModel({
             room,
