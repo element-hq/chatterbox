@@ -60,6 +60,20 @@ export class Hydrogen {
         this._container.appendChild(view.mount());
     }
 
+    /**
+     * Try to start Hydrogen based on an existing hydrogen session.
+     * If multiple sessions exist, this method chooses the most recent one.
+     */
+    async attemptStartWithExistingSession(): Promise<boolean> {
+        const sessionIds = await this._platform.sessionInfoStorage.getAll();
+        const { id } = sessionIds.pop();
+        if (id) {
+            await this._client.startWithExistingSession(id);
+            return true;
+        }
+        return false;
+    }
+
     private async _joinRoom(roomId: string): Promise<any> {
         await this._session.joinRoom(roomId);
         // even though we've joined the room, we need to wait till the next sync for the actual room

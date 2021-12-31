@@ -20,14 +20,23 @@ async function main() {
     const root = document.querySelector("#chatterbox") as HTMLDivElement;
     const { homeserver, auto_join_room } = await fetchConfig();
     const hydrogen = new Hydrogen(homeserver, root);
-    const username = generateRandomString(7);
-    const password = generateRandomString(10);
-    console.log(`Attempting to register with username = ${username} and password = ${password}`);
-    await hydrogen.register(username, password, "Chatterbox");
-    console.log("Registration done"); 
-    console.log("Attempting to login with same credentials");
-    await hydrogen.login(username, password);
-    console.log("Login successful");
+    console.log("Checking if session already exists");
+    const sessionAlreadyExists = await hydrogen.attemptStartWithExistingSession();
+    if (sessionAlreadyExists) {
+        console.log("Starting Hydrogen with existing session");
+    }
+    else {
+        console.log("Session does not exist!");
+        const username = generateRandomString(7);
+        const password = generateRandomString(10);
+        console.log(`Attempting to register with username = ${username} and password = ${password}`);
+        await hydrogen.register(username, password, "Chatterbox");
+        console.log("Registration done"); 
+        console.log("Attempting to login with same credentials");
+        await hydrogen.login(username, password);
+        console.log("Login successful");
+    }
+
     console.log("Attempting to mount Timeline");
     await hydrogen.showRoom(auto_join_room);
     console.log("Mounted Timeline");
