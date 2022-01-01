@@ -38,7 +38,7 @@ async function main() {
     }
 
     console.log("Attempting to mount Timeline");
-    await hydrogen.showRoom(auto_join_room);
+    await hydrogen.mountTimeline(auto_join_room);
     console.log("Mounted Timeline");
 }
 

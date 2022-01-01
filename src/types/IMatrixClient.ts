@@ -13,9 +13,9 @@ export interface IMatrixClient {
     attemptStartWithExistingSession(): Promise<boolean>;
 
     /**
-     * Renders a timeline for the given room.
+     * Renders a timeline and message composer for the given room.
      * @remarks This method should join the room if needed.
      * @param roomId internal room-id, not alias
      */
-    showRoom(roomId: string): Promise<void>;
+    mountTimeline(roomId: string): Promise<void>;
 }

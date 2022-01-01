@@ -46,7 +46,7 @@ export class Hydrogen implements IMatrixClient {
         }
     }
 
-    async showRoom(roomId: string): Promise<void> {
+    async mountTimeline(roomId: string): Promise<void> {
         const room = this._session.rooms.get(roomId) ?? await this._joinRoom(roomId);
         const roomVm = new RoomViewModel({
             room,
