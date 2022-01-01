@@ -1,55 +1,25 @@
-import { Hydrogen } from "./Hydrogen";
+import { Chatterbox } from "./Chatterbox";
 import type { IChatterboxConfig } from "./types/IChatterboxConfig";
 
-async function fetchConfig(): Promise<IChatterboxConfig> {
-    const root = document.querySelector("#chatterbox") as HTMLDivElement;
-    if (!root) {
-        throw new Error("No element with id as 'chatterbox' found!");
-    }
+const rootDivId = "#chatterbox";
 
+async function fetchConfig(root: HTMLDivElement): Promise<IChatterboxConfig> {
     const configLink = root?.dataset.configLink;
     if (!configLink) {
         throw new Error("Root element does not have config specified");
     }
-
     const config: IChatterboxConfig = await (await fetch(configLink)).json();
     return config;
 }
 
 async function main() {
-    const root = document.querySelector("#chatterbox") as HTMLDivElement;
-    const { homeserver, auto_join_room } = await fetchConfig();
-    const hydrogen = new Hydrogen(homeserver, root);
-    console.log("Checking if session already exists");
-    const sessionAlreadyExists = await hydrogen.attemptStartWithExistingSession();
-    if (sessionAlreadyExists) {
-        console.log("Starting Hydrogen with existing session");
+    const root = document.querySelector(rootDivId) as HTMLDivElement;
+    if (!root) {
+        throw new Error("No element with id as 'chatterbox' found!");
     }
-    else {
-        console.log("Session does not exist!");
-        const username = generateRandomString(7);
-        const password = generateRandomString(10);
-        console.log(`Attempting to register with username = ${username} and password = ${password}`);
-        await hydrogen.register(username, password, "Chatterbox");
-        console.log("Registration done"); 
-        console.log("Attempting to login with same credentials");
-        await hydrogen.login(username, password);
-        console.log("Login successful");
-    }
-
-    console.log("Attempting to mount Timeline");
-    await hydrogen.mountTimeline(auto_join_room);
-    console.log("Mounted Timeline");
-}
-
-function generateRandomString(length: number): string {
-    let result = "";
-    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
-    var charactersLength = characters.length;
-    for (let i = 0; i < length; i++) {
-        result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-    return result;
+    const config = await fetchConfig(root);
+    const chatterbox = new Chatterbox(config, root);
+    chatterbox.start();
 }
 
 main();
