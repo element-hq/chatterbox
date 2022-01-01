@@ -1,8 +1,14 @@
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+#chatterbox {
+    position: absolute;
+    width: 500px;
+    bottom: 0;
+    right: 0;
+}
+
+#chatterbox .Timeline {
+    height: 500px;
+}
+
+body {
+    background-color: #205a634d;
 }
