@@ -79,7 +79,7 @@ export class Hydrogen implements IMatrixClient {
 
     private async _joinRoom(roomId: string): Promise<any> {
         await this._session.joinRoom(roomId);
-        // even though we've joined the room, we need to wait till the next sync for the actual room
+        // even though we've joined the room, we need to wait till the next sync to get the room
         await this._waitForRoomFromSync(roomId);
         return this._session.rooms.get(roomId);
 
