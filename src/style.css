@@ -9,6 +9,15 @@
     height: 500px;
 }
 
+/*
+todo: this style should actually be in hydrogen-web
+*/
+#chatterbox .popupContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
 body {
     background-color: #205a634d;
 }
