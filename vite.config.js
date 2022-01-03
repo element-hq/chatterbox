@@ -12,7 +12,7 @@ module.exports = defineConfig({
     server: {
         fs: {
             // Allow serving files from hydrogen-web/target (for fonts and images)
-            allow: ["../hydrogen-web/target"],
+            allow: ["../hydrogen-web/target", "."],
         },
     },
 });
