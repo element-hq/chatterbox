@@ -1,4 +1,7 @@
 // todo: do we need something better than this?
+// todo: usernames can't start with _
+// todo: lookup grammar for mxids
+
 export function generateRandomString(length: number): string {
     let result = "";
     const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";

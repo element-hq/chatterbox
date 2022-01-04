@@ -1,5 +1,8 @@
-import { Chatterbox } from "./Chatterbox";
 import type { IChatterboxConfig } from "./types/IChatterboxConfig";
+import { Platform, createNavigation, createRouter } from "hydrogen-view-sdk";
+import { RootViewModel } from "./viewmodels/RootViewModel";
+import { RootView } from "./ui/views/RootView";
+import assetPaths from "hydrogen-view-sdk/paths/vite";
 
 const rootDivId = "#chatterbox";
 
@@ -18,8 +21,14 @@ async function main() {
         throw new Error("No element with id as 'chatterbox' found!");
     }
     const config = await fetchConfig(root);
-    const chatterbox = new Chatterbox(config, root);
-    chatterbox.start();
+    const platform = new Platform(root, assetPaths, {}, { development: import.meta.env.DEV });
+    const navigation = createNavigation();
+    platform.setNavigation(navigation);
+    const urlRouter = createRouter({ navigation, history: platform.history });
+    urlRouter.attach();
+    const rootViewModel = new RootViewModel(config, {platform, navigation, urlCreator: urlRouter});
+    const rootView = new RootView(rootViewModel);
+    root.appendChild(rootView.mount());
 }
 
 main();
