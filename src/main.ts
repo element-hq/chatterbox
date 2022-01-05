@@ -20,6 +20,7 @@ async function main() {
     if (!root) {
         throw new Error("No element with id as 'chatterbox' found!");
     }
+    root.className = "hydrogen";
     const config = await fetchConfig(root);
     const platform = new Platform(root, assetPaths, {}, { development: import.meta.env.DEV });
     const navigation = createNavigation();
