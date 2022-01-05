@@ -23,6 +23,6 @@ export class RootView extends TemplateView<RootViewModel> {
 
 class StartView extends TemplateView<RootViewModel> {
     render(t: Builder<RootViewModel>, vm: RootViewModel) {
-        return t.button({ className: "StartChat", onClick: () => vm.start() }, "Start Chat");
+        return t.button({ className: "StartChat", onClick: () => vm.start() });
     }
 }

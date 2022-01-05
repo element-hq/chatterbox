@@ -1,6 +1,5 @@
 #chatterbox {
     position: absolute;
-    width: 500px;
     bottom: 0;
     right: 0;
 }
@@ -16,6 +15,24 @@ todo: this style should actually be in hydrogen-web
     position: fixed;
     top: 0;
     left: 0;
+}
+
+.StartChat {
+    width: 32px;
+    height: 32px;
+    border: none;
+    margin: 5px;
+    background: no-repeat center url('./ui/res/chat-bubbles.svg'), #295dbd;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.hydrogen {
+    background-color: transparent !important;
+}
+
+.hydrogen :not(.StartChat) {
+    background-color: white;
 }
 
 body {
