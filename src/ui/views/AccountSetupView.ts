@@ -11,15 +11,17 @@ export class AccountSetupView extends TemplateView<AccountSetupViewModel> {
 class PolicyAgreementView extends TemplateView<AccountSetupViewModel> {
     render(t: Builder<AccountSetupViewModel>, vm: AccountSetupViewModel) {
         return t.div({ className: "PolicyAgreementView" }, [
-            t.div([
-                "By continuing you agree to the terms and conditions laid out by the following documents:",
-                t.a({href: vm.privacyPolicyLink}, "Privacy Policy")
+            t.div({ className: "PolicyAgreementView-text"},
+                [
+                "By continuing you agree to the ",
+                t.a({ href: vm.privacyPolicyLink }, "Privacy Policy"),
             ]),
-            t.div([
-                t.input({ type: "checkbox", name: "agree" }),
-                t.label({for: "agree"}, "I agree")
-            ]),
-            t.button({onClick: () => vm.completeRegistration()}, "Next")
+            t.div(
+                { className: "PolicyAgreementView-btn-collection" },
+                [
+                t.button( { onClick: () => vm.dismiss(), className: "button-action secondary PolicyAgreementView-cancel", }, "Cancel"),
+                t.button( { onClick: () => vm.completeRegistration(), className: "PolicyAgreementView-next button-action primary", }, "Next")
+                ]),
         ]);
     }
 }
