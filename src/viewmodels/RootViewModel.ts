@@ -18,22 +18,28 @@ export class RootViewModel extends ViewModel {
         super(options);
         this._config = config;
         this._client = new Client(this.platform);
+        this._state.subscribe(stage => this._applyNavigation(stage));
     }
 
     async start() {
-        this._state.subscribe(stage => this._applyNavigation(stage));
         const sessionAlreadyExists = await this.attemptStartWithExistingSession();
         if (sessionAlreadyExists) {
-            this._showTimeline();
+            this._state.set("timeline");
             return;
         }
-        this._showAccountSetup();
+        this._state.set("account-setup");
     }
 
     private _applyNavigation(stage: string) {
         switch (stage) {
             case "timeline":
                 this._showTimeline();
+                break;
+            case "start":
+                this._showStartButton();
+                break;
+            case "account-setup":
+                this._showAccountSetup();
                 break;
         }
     }
@@ -54,6 +60,11 @@ export class RootViewModel extends ViewModel {
                 state: this._state,
             })
         );
+        this.emitChange("activeSection");
+    }
+
+    private _showStartButton() {
+        this._activeSection = "start";
         this.emitChange("activeSection");
     }
 

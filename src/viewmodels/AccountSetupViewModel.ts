@@ -57,6 +57,10 @@ export class AccountSetupViewModel extends ViewModel {
         this._state.set("timeline");
     }
 
+    dismiss() {
+        this._state.set("start");
+    }
+
     private get _homeserver(): string {
         return this._config.homeserver;
     }
