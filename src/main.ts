@@ -1,5 +1,5 @@
 import type { IChatterboxConfig } from "./types/IChatterboxConfig";
-import { Platform, createNavigation, createRouter } from "hydrogen-view-sdk";
+import { Platform, createRouter, Navigation } from "hydrogen-view-sdk";
 import { RootViewModel } from "./viewmodels/RootViewModel";
 import { RootView } from "./ui/views/RootView";
 import assetPaths from "hydrogen-view-sdk/paths/vite";
@@ -23,13 +23,27 @@ async function main() {
     root.className = "hydrogen";
     const config = await fetchConfig(root);
     const platform = new Platform(root, assetPaths, {}, { development: import.meta.env.DEV });
-    const navigation = createNavigation();
+    const navigation = new Navigation(allowsChild);
     platform.setNavigation(navigation);
     const urlRouter = createRouter({ navigation, history: platform.history });
-    urlRouter.attach();
-    const rootViewModel = new RootViewModel(config, {platform, navigation, urlCreator: urlRouter});
+    const applySegment = getNavigation(navigation);
+    const rootViewModel = new RootViewModel(config, {platform, navigation, urlCreator: urlRouter, applySegment});
     const rootView = new RootView(rootViewModel);
     root.appendChild(rootView.mount());
 }
 
+function allowsChild(parent, child) {
+    return true;
+}
+
+function getNavigation(navigation) {
+
+    function applySegment(segment: string, value?: string) {
+        const s = navigation.segment(segment, value);
+        const path = navigation.pathFrom([s]);
+        navigation.applyPath(path);
+    }
+
+    return applySegment;
+}
 main();

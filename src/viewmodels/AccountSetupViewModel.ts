@@ -7,15 +7,15 @@ import "hydrogen-view-sdk/style.css";
 export class AccountSetupViewModel extends ViewModel {
     private _config: IChatterboxConfig;
     private _client: Client;
-    private _state: ObservableValue<string>;
     private _termsStage?: any;
     private _password: string;
+    private _applySegment: any;
 
     constructor(options) {
         super(options);
         this._client = options.client;
         this._config = options.config;
-        this._state = options.state;
+        this._applySegment = options.applySegment;
         this._startRegistration();
     }
 
@@ -53,11 +53,11 @@ export class AccountSetupViewModel extends ViewModel {
             throw new Error("load failed: " + this._client.loadError.message);
         }
 
-        this._state.set("timeline");
+        this._applySegment("timeline");
     }
 
     dismiss() {
-        this._state.set("start");
+        this._applySegment("start");
     }
 
     private get _homeserver(): string {

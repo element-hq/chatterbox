@@ -1,52 +1,52 @@
-import { ViewModel, Client, createNavigation, createRouter, Platform, ObservableValue } from "hydrogen-view-sdk";
+import { ViewModel, Client, Platform} from "hydrogen-view-sdk";
 import { IChatterboxConfig } from "../types/IChatterboxConfig";
 import { ChatterboxViewModel } from "./ChatterboxViewModel";
 import "hydrogen-view-sdk/style.css";
 import { AccountSetupViewModel } from "./AccountSetupViewModel";
 
-type Options = { platform: Platform, urlCreator: ReturnType<createRouter>, navigation: ReturnType<createNavigation> };
+type Options = { platform: Platform, navigation: ReturnType<createNavigation>, applySegment: (segment: string, value?: string) => void };
 
 export class RootViewModel extends ViewModel {
     private _config: IChatterboxConfig;
     private _client: Client;
     private _chatterBoxViewModel?: ChatterboxViewModel;
     private _accountSetupViewModel?: AccountSetupViewModel;
-    private _state: ObservableValue<string> = new ObservableValue("");
     private _activeSection: string = "start";
+    private _applySegment: Options["applySegment"];
 
     constructor(config: IChatterboxConfig, options: Options) {
         super(options);
         this._config = config;
         this._client = new Client(this.platform);
-        this._state.subscribe(stage => this._applyNavigation(stage));
+        this._applySegment = options.applySegment;
+        this._setupNavigation();
+    }
+
+    private _setupNavigation() {
+        this.navigation.observe("account-setup").subscribe(() => this._showAccountSetup());
+        this.navigation.observe("timeline").subscribe(() => this._showTimeline());
+        this.navigation.observe("start").subscribe(() => this._showStartButton());
     }
 
     async start() {
         const sessionAlreadyExists = await this.attemptStartWithExistingSession();
         if (sessionAlreadyExists) {
-            this._state.set("timeline");
+            this._applySegment("timeline");
             return;
         }
-        this._state.set("account-setup");
-    }
-
-    private _applyNavigation(stage: string) {
-        switch (stage) {
-            case "timeline":
-                this._showTimeline();
-                break;
-            case "start":
-                this._showStartButton();
-                break;
-            case "account-setup":
-                this._showAccountSetup();
-                break;
-        }
+        this._applySegment("account-setup");
     }
 
     private async _showTimeline() {
         this._activeSection = "timeline";
-        this._chatterBoxViewModel = new ChatterboxViewModel(this.childOptions({ session: this._client.session, config: this._config, state: this._state }));
+        this._chatterBoxViewModel = new ChatterboxViewModel(
+            this.childOptions({
+                session: this._client.session,
+                config: this._config,
+                state: this._state,
+                applySegment: this._applySegment,
+            })
+        );
         await this._chatterBoxViewModel.loadRoom();
         this.emitChange("activeSection");
     }
@@ -58,6 +58,7 @@ export class RootViewModel extends ViewModel {
                 client: this._client,
                 config: this._config,
                 state: this._state,
+                applySegment: this._applySegment,
             })
         );
         this.emitChange("activeSection");
