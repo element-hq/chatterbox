@@ -9,7 +9,6 @@ export class AccountSetupViewModel extends ViewModel {
     private _client: Client;
     private _state: ObservableValue<string>;
     private _termsStage?: any;
-    private _username: string;
     private _password: string;
 
     constructor(options) {
@@ -21,9 +20,8 @@ export class AccountSetupViewModel extends ViewModel {
     }
 
     private async _startRegistration(): Promise<void> {
-        this._username = generateRandomString(7);
         this._password = generateRandomString(10);
-        let stage = await this._client.startRegistration(this._homeserver, this._username, this._password, "Chatterbox");
+        let stage = await this._client.startRegistration(this._homeserver, null, this._password, "Chatterbox");
         if (stage.type === "m.login.terms") {
             this._termsStage = stage;
             this.emitChange("termsStage");
@@ -32,10 +30,11 @@ export class AccountSetupViewModel extends ViewModel {
 
     async completeRegistration() {
         let stage = this._termsStage;
-        while (stage !== true) {
+        while (typeof stage !== "string") {
             stage = await stage.complete();
         }
-        await this.login(this._username, this._password);
+        // stage is username when registration is completed
+        await this.login(stage, this._password);
     }
 
     async login(username: string, password: string): Promise<void> {
