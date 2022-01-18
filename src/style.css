@@ -65,6 +65,11 @@ todo: this style should actually be in hydrogen-web
     width: 100%;
 }
 
+.ChatterboxView {
+    width: 375px;
+    height: 570px;
+}
+
 .hydrogen {
     background-color: transparent !important;
 }

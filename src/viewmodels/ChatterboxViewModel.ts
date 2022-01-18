@@ -1,16 +1,19 @@
 import { RoomViewModel, ViewModel, TimelineViewModel, ComposerViewModel} from "hydrogen-view-sdk";
 
 export class ChatterboxViewModel extends ViewModel {
-    private readonly _session: any;
     private _timelineViewModel?: TimelineViewModel;
     private _messageComposerViewModel?: ComposerViewModel;
+    private _loginPromise: Promise<void>;
 
     constructor(options) {
         super(options);
-        this._session = options.session; 
+        this._client = options.client;
+        this._loginPromise = options.loginPromise;
     }
 
     async loadRoom() {
+        // wait until login is completed
+        await this._loginPromise;
         const roomId = this._options.config["auto_join_room"];
         const room = this._session.rooms.get(roomId) ?? await this._joinRoom(roomId);
         const roomVm = new RoomViewModel({
@@ -23,6 +26,7 @@ export class ChatterboxViewModel extends ViewModel {
         await roomVm.load();
         this._timelineViewModel = roomVm.timelineViewModel;
         this._messageComposerViewModel = new ComposerViewModel(roomVm);
+        this.emitChange("timelineViewModel");
     }
 
     private async _joinRoom(roomId: string): Promise<any> {
@@ -54,5 +58,9 @@ export class ChatterboxViewModel extends ViewModel {
 
     get messageComposerViewModel() {
         return this._messageComposerViewModel;
+    }
+
+    private get _session() {
+        return this._client.session;
     }
 }

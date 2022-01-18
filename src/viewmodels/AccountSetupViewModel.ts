@@ -34,13 +34,13 @@ export class AccountSetupViewModel extends ViewModel {
             stage = await stage.complete();
         }
         // stage is username when registration is completed
-        await this.login(stage, this._password);
+        const loginPromise = this.login(stage, this._password);
+        this._applySegment("timeline", loginPromise);
     }
 
     async login(username: string, password: string): Promise<void> {
         const loginOptions = await this._client.queryLogin(this._homeserver).result;
         this._client.startWithLogin(loginOptions.password(username, password));
-
         await this._client.loadStatus.waitFor((status: string) => {
             return status === LoadStatus.Ready ||
                 status === LoadStatus.Error ||
@@ -52,8 +52,6 @@ export class AccountSetupViewModel extends ViewModel {
         } else if (this._client.loadError) {
             throw new Error("load failed: " + this._client.loadError.message);
         }
-
-        this._applySegment("timeline");
     }
 
     dismiss() {

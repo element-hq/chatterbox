@@ -24,7 +24,7 @@ export class RootViewModel extends ViewModel {
 
     private _setupNavigation() {
         this.navigation.observe("account-setup").subscribe(() => this._showAccountSetup());
-        this.navigation.observe("timeline").subscribe(() => this._showTimeline());
+        this.navigation.observe("timeline").subscribe((loginPromise) => this._showTimeline(loginPromise));
         this.navigation.observe("start").subscribe(() => this._showStartButton());
     }
 
@@ -37,17 +37,18 @@ export class RootViewModel extends ViewModel {
         this._applySegment("account-setup");
     }
 
-    private async _showTimeline() {
+    private async _showTimeline(loginPromise: Promise<void>) {
         this._activeSection = "timeline";
         this._chatterBoxViewModel = new ChatterboxViewModel(
             this.childOptions({
-                session: this._client.session,
+                client: this._client,
                 config: this._config,
                 state: this._state,
                 applySegment: this._applySegment,
+                loginPromise,
             })
         );
-        await this._chatterBoxViewModel.loadRoom();
+        this._chatterBoxViewModel.loadRoom();
         this.emitChange("activeSection");
     }
 
