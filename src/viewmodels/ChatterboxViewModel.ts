@@ -1,14 +1,16 @@
 import { RoomViewModel, ViewModel, TimelineViewModel, ComposerViewModel} from "hydrogen-view-sdk";
 
 export class ChatterboxViewModel extends ViewModel {
-    private _timelineViewModel?: TimelineViewModel;
     private _messageComposerViewModel?: ComposerViewModel;
+    private _roomViewModel?: RoomViewModel;
     private _loginPromise: Promise<void>;
+    private _applySegment: (segment) => void;
 
     constructor(options) {
         super(options);
         this._client = options.client;
         this._loginPromise = options.loginPromise;
+        this._applySegment = options.applySegment;
     }
 
     async loadRoom() {
@@ -16,16 +18,15 @@ export class ChatterboxViewModel extends ViewModel {
         await this._loginPromise;
         const roomId = this._options.config["auto_join_room"];
         const room = this._session.rooms.get(roomId) ?? await this._joinRoom(roomId);
-        const roomVm = new RoomViewModel({
+        this._roomViewModel = new RoomViewModel({
             room,
             ownUserId: this._session.userId,
             platform: this.platform,
             urlCreator: this.urlCreator,
             navigation: this.navigation,
         });
-        await roomVm.load();
-        this._timelineViewModel = roomVm.timelineViewModel;
-        this._messageComposerViewModel = new ComposerViewModel(roomVm);
+        await this._roomViewModel.load();
+        this._messageComposerViewModel = new ComposerViewModel(this._roomViewModel);
         this.emitChange("timelineViewModel");
     }
 
@@ -52,12 +53,20 @@ export class ChatterboxViewModel extends ViewModel {
         return promise;
     }
 
+    minimize() {
+        this._applySegment("start");
+    }
+
     get timelineViewModel() {
-        return this._timelineViewModel;
+        return this._roomViewModel?.timelineViewModel;
     }
 
     get messageComposerViewModel() {
         return this._messageComposerViewModel;
+    }
+    
+    get roomViewModel() {
+        return this._roomViewModel;
     }
 
     private get _session() {

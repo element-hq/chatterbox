@@ -39,29 +39,31 @@ export class RootViewModel extends ViewModel {
 
     private async _showTimeline(loginPromise: Promise<void>) {
         this._activeSection = "timeline";
-        this._chatterBoxViewModel = new ChatterboxViewModel(
-            this.childOptions({
-                client: this._client,
-                config: this._config,
-                state: this._state,
-                applySegment: this._applySegment,
-                loginPromise,
-            })
-        );
-        this._chatterBoxViewModel.loadRoom();
+        if (!this._chatterBoxViewModel) {
+            this._chatterBoxViewModel = this.track(new ChatterboxViewModel(
+                this.childOptions({
+                    client: this._client,
+                    config: this._config,
+                    state: this._state,
+                    applySegment: this._applySegment,
+                    loginPromise,
+                })
+            ));
+            this._chatterBoxViewModel.loadRoom();
+        }
         this.emitChange("activeSection");
     }
 
     private _showAccountSetup() {
         this._activeSection = "account-setup";
-        this._accountSetupViewModel = new AccountSetupViewModel(
+        this._accountSetupViewModel = this.track(new AccountSetupViewModel(
             this.childOptions({
                 client: this._client,
                 config: this._config,
                 state: this._state,
                 applySegment: this._applySegment,
             })
-        );
+        ));
         this.emitChange("activeSection");
     }
 

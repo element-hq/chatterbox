@@ -3,14 +3,11 @@
     bottom: 10px;
     right: 10px;
     max-width: 375px;
+    border-radius: 5px;
 }
 
 #chatterbox .Timeline {
-    height: 500px;
-}
-
-#chatterbox>div {
-    border-radius: 5px;
+    height: 450px;
 }
 
 /*
@@ -26,7 +23,6 @@ todo: this style should actually be in hydrogen-web
     width: 32px;
     height: 32px;
     border: none;
-    margin: 5px;
     background: no-repeat center url('./ui/res/chat-bubbles.svg'), #295dbd;
     border-radius: 2px;
     cursor: pointer;
@@ -40,8 +36,8 @@ todo: this style should actually be in hydrogen-web
     justify-content: space-evenly;
     height: 80px;
     width: 320px;
-    border-radius: 5px;
 }
+
 .PolicyAgreementView-text {
     padding-bottom: 10px;
 }
@@ -67,15 +63,58 @@ todo: this style should actually be in hydrogen-web
 
 .ChatterboxView {
     width: 375px;
-    height: 570px;
+    height: 595px;
 }
 
-.hydrogen {
-    background-color: transparent !important;
+.RoomHeaderView {
+    display: grid;
+    grid-template-columns: 1fr 6fr 1fr;
+    align-items: center;
+    padding: 10px 15px;
+    height: 35px;
+    background-color: #295dbd;
+    border-radius: 5px 5px  0 0;
+    color: white;
+    font-weight: 600;
+    font-size: 1.5rem;
 }
 
-.hydrogen :not(.StartChat) {
-    background-color: rgba(245, 245, 245, 0.90);
+.RoomHeaderView_menu {
+    display: flex;
+    justify-content: end;
+}
+
+.RoomHeaderView_menu_minimize {
+    background: url("./ui/res/chevron-down.svg") no-repeat;
+    height: 20px;
+    width: 20px;
+    border: none;
+    cursor: pointer;
+}
+
+.RoomHeaderView .avatar {
+    border-radius: 2px;
+}
+
+.ChatterboxView_footer {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    font-size: 1.0rem;
+    font-weight: 600;
+    box-sizing: border-box;
+    padding-right: 53px;
+    color: #9b9797;
+}
+
+.ChatterboxView_footer>img {
+    width: 35px;
+    padding-left: 4px;
+}
+
+.ChatterboxView .MessageComposer_input>textarea {
+    border-radius: 5px;
+    border: #c2bebe 1.5px solid;
 }
 
 body {
