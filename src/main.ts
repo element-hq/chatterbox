@@ -26,24 +26,19 @@ async function main() {
     const navigation = new Navigation(allowsChild);
     platform.setNavigation(navigation);
     const urlRouter = createRouter({ navigation, history: platform.history });
-    const applySegment = getNavigation(navigation);
-    const rootViewModel = new RootViewModel(config, {platform, navigation, urlCreator: urlRouter, applySegment});
+    const rootViewModel = new RootViewModel(config, {platform, navigation, urlCreator: urlRouter});
     const rootView = new RootView(rootViewModel);
     root.appendChild(rootView.mount());
 }
 
 function allowsChild(parent, child) {
-    return true;
-}
-
-function getNavigation(navigation) {
-
-    function applySegment(segment: string, value?: string) {
-        const s = navigation.segment(segment, value);
-        const path = navigation.pathFrom([s]);
-        navigation.applyPath(path);
+    const { type } = child;
+    switch (parent?.type) {
+        case undefined:
+            return type === "start" || type === "account-setup" || type === "timeline";
+        default:
+            return false;
     }
-
-    return applySegment;
 }
+
 main();

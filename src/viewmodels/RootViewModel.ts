@@ -1,10 +1,10 @@
-import { ViewModel, Client, Platform} from "hydrogen-view-sdk";
+import { ViewModel, Client, Navigation, createRouter, Platform } from "hydrogen-view-sdk";
 import { IChatterboxConfig } from "../types/IChatterboxConfig";
 import { ChatterboxViewModel } from "./ChatterboxViewModel";
 import "hydrogen-view-sdk/style.css";
 import { AccountSetupViewModel } from "./AccountSetupViewModel";
 
-type Options = { platform: Platform, navigation: ReturnType<createNavigation>, applySegment: (segment: string, value?: string) => void };
+type Options = { platform: Platform, navigation: ReturnType<Navigation>, urlCreator: ReturnType<createRouter> };
 
 export class RootViewModel extends ViewModel {
     private _config: IChatterboxConfig;
@@ -12,13 +12,11 @@ export class RootViewModel extends ViewModel {
     private _chatterBoxViewModel?: ChatterboxViewModel;
     private _accountSetupViewModel?: AccountSetupViewModel;
     private _activeSection: string = "start";
-    private _applySegment: Options["applySegment"];
 
     constructor(config: IChatterboxConfig, options: Options) {
         super(options);
         this._config = config;
         this._client = new Client(this.platform);
-        this._applySegment = options.applySegment;
         this._setupNavigation();
     }
 
@@ -31,10 +29,10 @@ export class RootViewModel extends ViewModel {
     async start() {
         const sessionAlreadyExists = await this.attemptStartWithExistingSession();
         if (sessionAlreadyExists) {
-            this._applySegment("timeline");
+            this.navigation.push("timeline");
             return;
         }
-        this._applySegment("account-setup");
+        this.navigation.push("account-setup");
     }
 
     private async _showTimeline(loginPromise: Promise<void>) {
@@ -45,7 +43,6 @@ export class RootViewModel extends ViewModel {
                     client: this._client,
                     config: this._config,
                     state: this._state,
-                    applySegment: this._applySegment,
                     loginPromise,
                 })
             ));
@@ -61,7 +58,6 @@ export class RootViewModel extends ViewModel {
                 client: this._client,
                 config: this._config,
                 state: this._state,
-                applySegment: this._applySegment,
             })
         ));
         this.emitChange("activeSection");

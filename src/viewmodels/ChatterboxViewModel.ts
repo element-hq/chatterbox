@@ -1,16 +1,14 @@
-import { RoomViewModel, ViewModel, TimelineViewModel, ComposerViewModel} from "hydrogen-view-sdk";
+import { RoomViewModel, ViewModel, ComposerViewModel} from "hydrogen-view-sdk";
 
 export class ChatterboxViewModel extends ViewModel {
     private _messageComposerViewModel?: ComposerViewModel;
     private _roomViewModel?: RoomViewModel;
     private _loginPromise: Promise<void>;
-    private _applySegment: (segment) => void;
 
     constructor(options) {
         super(options);
         this._client = options.client;
         this._loginPromise = options.loginPromise;
-        this._applySegment = options.applySegment;
     }
 
     async loadRoom() {
@@ -54,7 +52,7 @@ export class ChatterboxViewModel extends ViewModel {
     }
 
     minimize() {
-        this._applySegment("start");
+        this.navigation.push("start");
     }
 
     get timelineViewModel() {

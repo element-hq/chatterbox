@@ -1,4 +1,4 @@
-import { ViewModel, Client, ObservableValue, LoadStatus } from "hydrogen-view-sdk";
+import { ViewModel, Client, LoadStatus } from "hydrogen-view-sdk";
 import { IChatterboxConfig } from "../types/IChatterboxConfig";
 import { generateRandomString } from "../random";
 import "hydrogen-view-sdk/style.css";
@@ -9,13 +9,11 @@ export class AccountSetupViewModel extends ViewModel {
     private _client: Client;
     private _termsStage?: any;
     private _password: string;
-    private _applySegment: any;
 
     constructor(options) {
         super(options);
         this._client = options.client;
         this._config = options.config;
-        this._applySegment = options.applySegment;
         this._startRegistration();
     }
 
@@ -35,7 +33,7 @@ export class AccountSetupViewModel extends ViewModel {
         }
         // stage is username when registration is completed
         const loginPromise = this.login(stage, this._password);
-        this._applySegment("timeline", loginPromise);
+        this.navigation.push("timeline", loginPromise);
     }
 
     async login(username: string, password: string): Promise<void> {
@@ -55,7 +53,7 @@ export class AccountSetupViewModel extends ViewModel {
     }
 
     dismiss() {
-        this._applySegment("start");
+        this.navigation.push("start");
     }
 
     private get _homeserver(): string {
