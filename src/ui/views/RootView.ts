@@ -1,11 +1,14 @@
 import { TemplateView } from "hydrogen-view-sdk";
-import { Builder } from "hydrogen-view-sdk/types/platform/web/ui/general/TemplateView";
 import { RootViewModel } from "../../viewmodels/RootViewModel";
 import { AccountSetupView } from "./AccountSetupView";
 import { ChatterboxView } from "./ChatterboxView";
 
 export class RootView extends TemplateView<RootViewModel> {
-    render(t: Builder<RootViewModel>, vm: RootViewModel) {
+    constructor(value) {
+        super(value);
+    }
+
+    render(t, vm: RootViewModel) {
         return t.mapView(vm => vm.activeSection, section => {
             switch(section) {
                 case "start":
@@ -22,7 +25,7 @@ export class RootView extends TemplateView<RootViewModel> {
 
 
 class StartView extends TemplateView<RootViewModel> {
-    render(t: Builder<RootViewModel>, vm: RootViewModel) {
+    render(t, vm: RootViewModel) {
         return t.button({ className: "StartChat", onClick: () => vm.start() });
     }
 }

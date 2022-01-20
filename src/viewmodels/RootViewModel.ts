@@ -1,14 +1,14 @@
-import { ViewModel, Client, Navigation, createRouter, Platform } from "hydrogen-view-sdk";
+import { ViewModel, Client, Navigation, createRouter, Platform  } from "hydrogen-view-sdk";
 import { IChatterboxConfig } from "../types/IChatterboxConfig";
 import { ChatterboxViewModel } from "./ChatterboxViewModel";
 import "hydrogen-view-sdk/style.css";
 import { AccountSetupViewModel } from "./AccountSetupViewModel";
 
-type Options = { platform: Platform, navigation: ReturnType<Navigation>, urlCreator: ReturnType<createRouter> };
+type Options = { platform: typeof Platform, navigation: typeof Navigation, urlCreator: ReturnType<typeof createRouter> };
 
 export class RootViewModel extends ViewModel {
     private _config: IChatterboxConfig;
-    private _client: Client;
+    private _client: typeof Client;
     private _chatterBoxViewModel?: ChatterboxViewModel;
     private _accountSetupViewModel?: AccountSetupViewModel;
     private _activeSection: string = "start";

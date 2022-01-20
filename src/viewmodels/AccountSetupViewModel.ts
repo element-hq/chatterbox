@@ -6,7 +6,7 @@ import "hydrogen-view-sdk/style.css";
 
 export class AccountSetupViewModel extends ViewModel {
     private _config: IChatterboxConfig;
-    private _client: Client;
+    private _client: typeof Client;
     private _termsStage?: any;
     private _password: string;
 

@@ -1,9 +1,12 @@
 import { TemplateView, LoadingView } from "hydrogen-view-sdk";
-import { Builder } from "hydrogen-view-sdk/types/platform/web/ui/general/TemplateView";
 import { AccountSetupViewModel } from "../../viewmodels/AccountSetupViewModel";
 
 export class AccountSetupView extends TemplateView<AccountSetupViewModel> {
-    render(t: Builder<AccountSetupViewModel>, vm: AccountSetupViewModel) {
+    constructor(value) {
+        super(value);
+    }
+
+    render(t, vm: AccountSetupViewModel) {
         return t.div(
             { className: "AccountSetupView" },
             t.mapView( (vm) => vm.privacyPolicyLink, (link) => link ? new PolicyAgreementView(vm) : new LoadingView())
@@ -12,7 +15,11 @@ export class AccountSetupView extends TemplateView<AccountSetupViewModel> {
 }
 
 class PolicyAgreementView extends TemplateView<AccountSetupViewModel> {
-    render(t: Builder<AccountSetupViewModel>, vm: AccountSetupViewModel) {
+    constructor(value) {
+        super(value);
+    }
+
+    render(t, vm: AccountSetupViewModel) {
         return t.div({ className: "PolicyAgreementView" }, [
             t.div({ className: "PolicyAgreementView-text"},
                 [

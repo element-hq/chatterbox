@@ -1,8 +1,8 @@
 import { RoomViewModel, ViewModel, ComposerViewModel} from "hydrogen-view-sdk";
 
 export class ChatterboxViewModel extends ViewModel {
-    private _messageComposerViewModel?: ComposerViewModel;
-    private _roomViewModel?: RoomViewModel;
+    private _messageComposerViewModel?: typeof ComposerViewModel;
+    private _roomViewModel?: typeof RoomViewModel;
     private _loginPromise: Promise<void>;
 
     constructor(options) {
