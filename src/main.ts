@@ -19,8 +19,9 @@ const assetPaths = {
 
 const rootDivId = "#chatterbox";
 
-async function fetchConfig(root: HTMLDivElement): Promise<IChatterboxConfig> {
-    const configLink = root?.dataset.configLink;
+async function fetchConfig(): Promise<IChatterboxConfig> {
+    const queryParams = new URLSearchParams(window.location.search);
+    const configLink = queryParams.get("config");
     if (!configLink) {
         throw new Error("Root element does not have config specified");
     }
@@ -34,7 +35,7 @@ async function main() {
         throw new Error("No element with id as 'chatterbox' found!");
     }
     root.className = "hydrogen";
-    const config = await fetchConfig(root);
+    const config = await fetchConfig();
     const platform = new Platform(root, assetPaths, {}, { development: import.meta.env.DEV });
     const navigation = new Navigation(allowsChild);
     platform.setNavigation(navigation);
