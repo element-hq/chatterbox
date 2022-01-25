@@ -55,9 +55,8 @@ function allowsChild(parent, child) {
     }
 }
 
-function sendFrameResizeEventToParent(height?: number, width?: number) {
-    const message = { action: "resize-iframe", params: { height, width } };
-    window.parent?.postMessage(message);
+function sendFrameResizeEventToParent(view: string) {
+    window.parent?.postMessage(view);
 }
 
 (window as any).sendFrameResizeEventToParent = sendFrameResizeEventToParent;

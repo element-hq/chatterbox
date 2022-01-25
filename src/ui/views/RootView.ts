@@ -12,13 +12,13 @@ export class RootView extends TemplateView<RootViewModel> {
         return t.mapView(vm => vm.activeSection, section => {
             switch(section) {
                 case "start":
-                    window.sendFrameResizeEventToParent("50px", "50px");
+                    window.sendFrameResizeEventToParent("start");
                     return new StartView(vm);
                 case "account-setup":
-                    window.sendFrameResizeEventToParent("115px", "360px");
+                    window.sendFrameResizeEventToParent("account-setup");
                     return new AccountSetupView(vm.accountSetupViewModel);
                 case "timeline":
-                    window.sendFrameResizeEventToParent("600px", "400px");
+                    window.sendFrameResizeEventToParent("timeline");
                     return new ChatterboxView(vm.chatterboxViewModel);
             }
             return null;
