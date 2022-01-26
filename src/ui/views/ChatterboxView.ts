@@ -1,7 +1,7 @@
 import { TemplateView, TimelineView, LoadingView, AvatarView } from "hydrogen-view-sdk";
 import { MessageComposer } from "hydrogen-view-sdk";
 import { ChatterboxViewModel } from "../../viewmodels/ChatterboxViewModel";
-
+import matrixLogo from "../res/matrix-logo.svg";
 export class ChatterboxView extends TemplateView<ChatterboxViewModel> {
     constructor(value) {
         super(value);
@@ -21,10 +21,9 @@ export class ChatterboxView extends TemplateView<ChatterboxViewModel> {
                 (vm) => vm.messageComposerViewModel,
                 (vm) => (vm ? new MessageComposer(vm) : null)
             ),
-            t.div({ className: "ChatterboxView_footer" }, [
-                "Powered by",
-                t.img({ src: "./src/ui/res/matrix-logo.svg" }),
-            ]),
+            t.mapView(
+                (vm) => vm.roomViewModel,
+                (vm) => vm ? new RoomFooter() : null),
         ]);
     }
 }
@@ -41,6 +40,16 @@ class RoomHeaderView extends TemplateView<ChatterboxViewModel> {
             t.div({ className: "RoomHeaderView_menu" }, [
                 t.button({ className: "RoomHeaderView_menu_minimize", onClick: () => vm.minimize() })
             ]),
+        ]);
+    }
+}
+
+class RoomFooter extends TemplateView {
+
+    render(t) {
+        return t.div({ className: "ChatterboxView_footer" }, [
+            "Powered by",
+            t.img({ src: matrixLogo }),
         ]);
     }
 }
