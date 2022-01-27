@@ -1,6 +1,6 @@
 import { ViewModel, Client, LoadStatus } from "hydrogen-view-sdk";
 import { IChatterboxConfig } from "../types/IChatterboxConfig";
-import { generateRandomString } from "../random";
+import { generatePassword, generateUsername } from "../random";
 import "hydrogen-view-sdk/style.css";
 
 
@@ -9,6 +9,7 @@ export class AccountSetupViewModel extends ViewModel {
     private _client: typeof Client;
     private _termsStage?: any;
     private _password: string;
+    private _username: string;
 
     constructor(options) {
         super(options);
@@ -18,8 +19,9 @@ export class AccountSetupViewModel extends ViewModel {
     }
 
     private async _startRegistration(): Promise<void> {
-        this._password = generateRandomString(10);
-        let stage = await this._client.startRegistration(this._homeserver, null, this._password, "Chatterbox");
+        this._password = generatePassword(10);
+        this._username = `${this._config.username_prefix}-${generateUsername(10)}`;
+        let stage = await this._client.startRegistration(this._homeserver, this._username, this._password, "Chatterbox");
         if (stage.type === "m.login.terms") {
             this._termsStage = stage;
             this.emitChange("termsStage");
@@ -32,7 +34,7 @@ export class AccountSetupViewModel extends ViewModel {
             stage = await stage.complete();
         }
         // stage is username when registration is completed
-        const loginPromise = this.login(stage, this._password);
+        const loginPromise = this.login(this._username, this._password);
         this.navigation.push("timeline", loginPromise);
     }
 
