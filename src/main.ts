@@ -55,9 +55,8 @@ function allowsChild(parent, child) {
     }
 }
 
-function sendFrameResizeEventToParent(view: string) {
+(window as any).sendViewChangeToParent = function (view: "timeline" | "start" | "account-setup") {
     window.parent?.postMessage(view);
-}
+};
 
-(window as any).sendFrameResizeEventToParent = sendFrameResizeEventToParent;
 main();

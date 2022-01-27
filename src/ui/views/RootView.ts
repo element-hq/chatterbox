@@ -10,15 +10,13 @@ export class RootView extends TemplateView<RootViewModel> {
 
     render(t, vm: RootViewModel) {
         return t.mapView(vm => vm.activeSection, section => {
+            (window as any).sendViewChangeToParent(section);
             switch(section) {
                 case "start":
-                    window.sendFrameResizeEventToParent("start");
                     return new StartView(vm);
                 case "account-setup":
-                    window.sendFrameResizeEventToParent("account-setup");
                     return new AccountSetupView(vm.accountSetupViewModel);
                 case "timeline":
-                    window.sendFrameResizeEventToParent("timeline");
                     return new ChatterboxView(vm.chatterboxViewModel);
             }
             return null;
