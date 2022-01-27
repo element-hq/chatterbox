@@ -20,11 +20,22 @@ export class AccountSetupViewModel extends ViewModel {
 
     private async _startRegistration(): Promise<void> {
         this._password = generatePassword(10);
-        this._username = `${this._config.username_prefix}-${generateUsername(10)}`;
-        let stage = await this._client.startRegistration(this._homeserver, this._username, this._password, "Chatterbox");
-        if (stage.type === "m.login.terms") {
-            this._termsStage = stage;
-            this.emitChange("termsStage");
+        const maxAttempts = 10;
+        for (let i = 0; i < maxAttempts; ++i) {
+            try {
+                this._username = `${this._config.username_prefix}-${generateUsername(10)}`;
+                let stage = await this._client.startRegistration(this._homeserver, this._username, this._password, "Chatterbox");
+                if (stage.type === "m.login.terms") {
+                    this._termsStage = stage;
+                    this.emitChange("termsStage");
+                }
+                break;
+            }
+            catch (e) {
+                if (e.errcode !== "M_USER_IN_USE") {
+                    throw e;
+                }
+            }
         }
     }
 
@@ -33,7 +44,6 @@ export class AccountSetupViewModel extends ViewModel {
         while (typeof stage !== "string") {
             stage = await stage.complete();
         }
-        // stage is username when registration is completed
         const loginPromise = this.login(this._username, this._password);
         this.navigation.push("timeline", loginPromise);
     }
