@@ -4,26 +4,13 @@
 <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="stylesheet" href="/src/parent-style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Chatterbox</title>
 </head>
 
 <body>
-    <embed src="./chatterbox.html?config=./config.json" class="chatterbox-iframe">
-    <script src="/src/resize.ts"></script>
-    <style>
-        .chatterbox-iframe {
-            position: absolute;
-            right: 0;
-            bottom: 0;
-            height: 615px;
-            width: 397px;
-        }
-
-        body {
-            background-color: blanchedalmond;
-        }
-    </style>
+    <script src="/src/parent.ts" type="module"></script>
 </body>
 
 </html>

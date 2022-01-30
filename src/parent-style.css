@@ -1,0 +1,27 @@
+.chatterbox-iframe {
+    position: absolute;
+    right: 0;
+    bottom: 50px;
+    height: 615px;
+    width: 397px;
+    border: none;
+}
+
+.start {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+}
+
+.start button {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: no-repeat center url('./ui/res/chat-bubbles.svg'), #295dbd;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+body {
+    background-color: blanchedalmond;
+}
