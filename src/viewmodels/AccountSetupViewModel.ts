@@ -64,10 +64,6 @@ export class AccountSetupViewModel extends ViewModel {
         }
     }
 
-    dismiss() {
-        this.navigation.push("start");
-    }
-
     private get _homeserver(): string {
         return this._config.homeserver;
     }

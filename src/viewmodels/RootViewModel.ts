@@ -11,7 +11,7 @@ export class RootViewModel extends ViewModel {
     private _client: typeof Client;
     private _chatterBoxViewModel?: ChatterboxViewModel;
     private _accountSetupViewModel?: AccountSetupViewModel;
-    private _activeSection: string = "start";
+    private _activeSection?: string;
 
     constructor(config: IChatterboxConfig, options: Options) {
         super(options);
@@ -23,7 +23,6 @@ export class RootViewModel extends ViewModel {
     private _setupNavigation() {
         this.navigation.observe("account-setup").subscribe(() => this._showAccountSetup());
         this.navigation.observe("timeline").subscribe((loginPromise) => this._showTimeline(loginPromise));
-        this.navigation.observe("start").subscribe(() => this._showStartButton());
     }
 
     async start() {
@@ -60,11 +59,6 @@ export class RootViewModel extends ViewModel {
                 state: this._state,
             })
         ));
-        this.emitChange("activeSection");
-    }
-
-    private _showStartButton() {
-        this._activeSection = "start";
         this.emitChange("activeSection");
     }
 

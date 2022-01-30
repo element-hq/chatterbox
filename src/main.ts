@@ -41,6 +41,7 @@ async function main() {
     platform.setNavigation(navigation);
     const urlRouter = createRouter({ navigation, history: platform.history });
     const rootViewModel = new RootViewModel(config, {platform, navigation, urlCreator: urlRouter});
+    rootViewModel.start();
     const rootView = new RootView(rootViewModel);
     root.appendChild(rootView.mount());
 }
@@ -55,8 +56,15 @@ function allowsChild(parent, child) {
     }
 }
 
-(window as any).sendViewChangeToParent = function (view: "timeline" | "start" | "account-setup") {
-    window.parent?.postMessage(view);
+(window as any).sendViewChangeToParent = function (view: "timeline" | "account-setup") {
+    window.parent?.postMessage({
+        action: "resize-iframe",
+        view
+    });
+};
+
+(window as any).sendMinimizeToParent = function () {
+    window.parent?.postMessage({ action: "minimize" });
 };
 
 main();

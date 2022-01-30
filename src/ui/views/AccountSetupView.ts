@@ -29,7 +29,7 @@ class PolicyAgreementView extends TemplateView<AccountSetupViewModel> {
             t.div(
                 { className: "PolicyAgreementView-btn-collection" },
                 [
-                t.button( { onClick: () => vm.dismiss(), className: "button-action secondary PolicyAgreementView-cancel", }, "Cancel"),
+                t.button( { onClick: () => (window as any).sendMinimizeToParent(), className: "button-action secondary PolicyAgreementView-cancel", }, "Cancel"),
                 t.button( { onClick: () => vm.completeRegistration(), className: "PolicyAgreementView-next button-action primary", }, "Next")
                 ]),
         ]);
