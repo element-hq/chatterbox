@@ -1,13 +1,20 @@
+body {
+    margin: 0;
+}
+
 #chatterbox {
     position: absolute;
-    bottom: 10px;
-    right: 10px;
-    max-width: 375px;
+    width: 100vw;
+    height: 100vh;
     border-radius: 5px;
 }
 
 #chatterbox .Timeline {
-    height: 450px;
+    flex-grow: 2;
+}
+
+#chatterbox .Timeline_messageAvatar {
+    pointer-events: none;
 }
 
 /*
@@ -30,12 +37,11 @@ todo: this style should actually be in hydrogen-web
 
 .AccountSetupView {
     display: flex;
-    padding: 10px;
     flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
-    height: 80px;
-    width: 320px;
+    height: 100%;
+    width: 100%;
 }
 
 .PolicyAgreementView-text {
@@ -62,8 +68,10 @@ todo: this style should actually be in hydrogen-web
 }
 
 .ChatterboxView {
-    width: 375px;
-    height: 595px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .RoomHeaderView {
@@ -73,7 +81,7 @@ todo: this style should actually be in hydrogen-web
     padding: 10px 15px;
     height: 35px;
     background-color: #295dbd;
-    border-radius: 5px 5px  0 0;
+    border-radius: 5px 5px 0 0;
     color: white;
     font-weight: 600;
     font-size: 1.5rem;

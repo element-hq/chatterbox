@@ -1,10 +1,12 @@
+import cssLink from "./parent-style.css";
+
 const configLocation = "./config.json";
 let isIframeLoaded = false;
 
 const sizeCollection = {
     "desktop": {
-        "account-setup": { height: "160px", width: "360px" },
-        "timeline": {height: "600px", width: "400px"}
+        "account-setup": { height: "110px", width: "360px" },
+        "timeline": {height: "600px", width: "375px"}
     },
     "mobile": {
         "account-setup": { height: "100vh", width: "100vw" },
@@ -13,16 +15,10 @@ const sizeCollection = {
 }
 
 window.addEventListener("message", event => {
-    const iframeElement = document.querySelector(".chatterbox-iframe") as HTMLIFrameElement;
     const { action } = event.data;
     switch (action) {
         case "resize-iframe":
-            const { view } = event.data;
-            const size = sizeCollection.desktop[view];
-            if (!size) { return; }
-            const { height, width } = size;
-            if (height) { iframeElement.style.height = height; }
-            if (width) { iframeElement.style.width = width; }
+            resizeIframe(event.data);
             break;
         case "minimize":
             minimizeIframe();
@@ -30,7 +26,12 @@ window.addEventListener("message", event => {
     }
 });
 
+function isMobile() {
+    return window.innerWidth <= 800 && window.innerHeight <= 930;
+}
+
 function renderStartButton() {
+    loadCSS();
     const container = document.createElement("div");
     container.className = "start";
     const button = document.createElement("button");
@@ -40,23 +41,49 @@ function renderStartButton() {
     document.body.appendChild(container);
 }
 
+function loadCSS() {
+    const linkElement = document.createElement("link") as HTMLLinkElement;
+    linkElement.rel = "stylesheet";
+    linkElement.href = cssLink;
+}
+
 function loadChatterboxIframe() {
     const iframe = document.createElement("iframe");
     iframe.src = `./chatterbox.html?config=${configLocation}`;
     iframe.className = "chatterbox-iframe";
     document.body.appendChild(iframe);
     isIframeLoaded = true;
+    if (isMobile()) {
+        (document.querySelector(".start") as HTMLButtonElement).style.display = "none";
+    }
 }
 
 function minimizeIframe() {
     const iframeElement = document.querySelector(".chatterbox-iframe") as HTMLIFrameElement;
+    const startButton = document.querySelector(".start") as HTMLButtonElement;
     if (iframeElement.style.display !== "none") {
         iframeElement.style.display = "none";
+        if (isMobile()) {
+            startButton.style.display = "block";
+        }
     }
     else {
         iframeElement.style.display = "block";
+        if (isMobile()) {
+            startButton.style.display = "none";
+        }
     }
+}
 
+function resizeIframe(data) {
+    const { view } = data;
+    const type = isMobile()? "mobile": "desktop";
+    const size = sizeCollection[type][view];
+    if (!size) { return; }
+    const { height, width } = size;
+    const iframeElement = document.querySelector(".chatterbox-iframe") as HTMLIFrameElement;
+    if (height) { iframeElement.style.height = height; }
+    if (width) { iframeElement.style.width = width; }
 }
 
 renderStartButton();

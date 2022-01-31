@@ -1,10 +1,21 @@
 .chatterbox-iframe {
     position: absolute;
-    right: 0;
+    right: 10px;
     bottom: 50px;
-    height: 615px;
-    width: 397px;
     border: none;
+    /*
+     this is to prevent the display of the smaller iframe before it is resized
+     programmatically.
+    */
+    height: 0;
+    width: 0;
+}
+
+@media (max-width: 800px)  {
+    .chatterbox-iframe {
+        bottom: 0;
+        right: 0;
+    }
 }
 
 .start {
