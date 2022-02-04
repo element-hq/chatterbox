@@ -6,10 +6,10 @@ module.exports = defineConfig({
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'chatterbox.html'),
-        parent: resolve(__dirname, '/src/parent-style.css')
+        parent: resolve(__dirname, 'index.html')
       }
         },
-        outDir: "./build/chatterbox"
+        outDir: "./target"
   },
     server: {
         fs: {
