@@ -10,6 +10,7 @@ export class AccountSetupViewModel extends ViewModel {
     private _termsStage?: any;
     private _password: string;
     private _username: string;
+    private _registration: any;
 
     constructor(options) {
         super(options);
@@ -24,7 +25,8 @@ export class AccountSetupViewModel extends ViewModel {
         for (let i = 0; i < maxAttempts; ++i) {
             try {
                 this._username = `${this._config.username_prefix}-${generateUsername(10)}`;
-                let stage = await this._client.startRegistration(this._homeserver, this._username, this._password, "Chatterbox");
+                this._registration = await this._client.startRegistration(this._homeserver, this._username, this._password, "Chatterbox");
+                const stage = await this._registration.start();
                 if (stage.type === "m.login.terms") {
                     this._termsStage = stage;
                     this.emitChange("termsStage");
@@ -41,8 +43,8 @@ export class AccountSetupViewModel extends ViewModel {
 
     async completeRegistration() {
         let stage = this._termsStage;
-        while (typeof stage !== "string") {
-            stage = await stage.complete();
+        while (stage) {
+            stage = await this._registration.submitStage(stage);
         }
         const loginPromise = this.login(this._username, this._password);
         this.navigation.push("timeline", loginPromise);
