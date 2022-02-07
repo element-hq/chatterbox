@@ -11,10 +11,4 @@ module.exports = defineConfig({
         },
         outDir: "./target"
   },
-    server: {
-        fs: {
-            // Allow serving files from hydrogen-web/target (for fonts and images)
-            allow: ["../hydrogen-web/target", "."],
-        },
-    },
 });
