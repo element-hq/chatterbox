@@ -1,13 +1,18 @@
-// todo: do we need something better than this?
-// todo: usernames can't start with _
-// todo: lookup grammar for mxids
-
-export function generateRandomString(length: number): string {
+function generateRandomString(length: number, allowedCharacters: string): string {
     let result = "";
-    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
-    var charactersLength = characters.length;
+    const l = allowedCharacters.length;
     for (let i = 0; i < length; i++) {
-        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        result += allowedCharacters.charAt(Math.floor(Math.random() * l));
     }
     return result;
+}
+
+export function generatePassword(length: number) {
+    const characters = ' !"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~';
+    return generateRandomString(length, characters);
+}
+
+export function generateUsername(length: number) {
+    const characters = 'abcdefghijklmnopqrstuvwxyz0123456789_-.=/';
+    return generateRandomString(length, characters);
 }

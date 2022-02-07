@@ -1,14 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-    <link rel="stylesheet" href="/src/style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Chatterbox</title>
-  </head>
-  <body>
-    <div id="chatterbox" data-config-link="./config.json"></div>
-    <script type="module" src="/src/main.ts"></script>
-  </body>
+    <style>
+        .container {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+        }
+
+        .title {
+            font-size: xx-large;
+            padding-bottom: 15px;
+        }
+
+        .para {
+            padding-bottom: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="title">This is a website</div>
+        <div class="content">
+            <div class="para">Elit aute occaecat do labore ea mollit cupidatat. Eiusmod non mollit excepteur adipisicing deserunt et do fugiat ea. Sit commodo laborum labore dolor ad nulla dolore aute sit occaecat irure magna. Cupidatat dolore sint Lorem sint id laboris pariatur dolore laborum ullamco ad. Cillum ut ea nisi proident in cillum. Pariatur esse dolor est laborum ad nostrud. Exercitation esse commodo minim ipsum aute duis pariatur dolore culpa.</div>
+            <div class="para">Elit aute occaecat do labore ea mollit cupidatat. Eiusmod non mollit excepteur adipisicing deserunt et do fugiat ea. Sit commodo laborum labore dolor ad nulla dolore aute sit occaecat irure magna. Cupidatat dolore sint Lorem sint id laboris pariatur dolore laborum ullamco ad. Cillum ut ea nisi proident in cillum. Pariatur esse dolor est laborum ad nostrud. Exercitation esse commodo minim ipsum aute duis pariatur dolore culpa.</div>
+            <div class="para">Elit aute occaecat do labore ea mollit cupidatat. Eiusmod non mollit excepteur adipisicing deserunt et do fugiat ea. Sit commodo laborum labore dolor ad nulla dolore aute sit occaecat irure magna. Cupidatat dolore sint Lorem sint id laboris pariatur dolore laborum ullamco ad. Cillum ut ea nisi proident in cillum. Pariatur esse dolor est laborum ad nostrud. Exercitation esse commodo minim ipsum aute duis pariatur dolore culpa.</div>
+        </div>
+    </div>
+    <script src="/src/parent.ts" type="module"></script>
+</body>
+
 </html>
