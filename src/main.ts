@@ -60,11 +60,11 @@ function allowsChild(parent, child) {
     window.parent?.postMessage({
         action: "resize-iframe",
         view
-    });
+    }, "*");
 };
 
 (window as any).sendMinimizeToParent = function () {
-    window.parent?.postMessage({ action: "minimize" });
+    window.parent?.postMessage({ action: "minimize" }, "*");
 };
 
 main();

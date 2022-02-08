@@ -1,7 +1,7 @@
-import cssLink from "./parent-style.css";
+import startButtonIcon from "./ui/res/chat-bubbles.svg";
 
-const configLocation = "./config.json";
 let isIframeLoaded = false;
+const rootHost = (document.querySelector("#chatterbox-script") as HTMLScriptElement).src;
 
 const sizeCollection = {
     "desktop": {
@@ -37,6 +37,8 @@ function renderStartButton() {
     const button = document.createElement("button");
     button.className = "StartChat";
     button.onclick = () => isIframeLoaded? minimizeIframe() : loadChatterboxIframe();
+    const fixedStartButtonIcon = new URL(startButtonIcon, rootHost).href;
+    button.style.backgroundImage = `url(${fixedStartButtonIcon})`;
     container.appendChild(button);
     document.body.appendChild(container);
 }
@@ -44,12 +46,19 @@ function renderStartButton() {
 function loadCSS() {
     const linkElement = document.createElement("link") as HTMLLinkElement;
     linkElement.rel = "stylesheet";
-    linkElement.href = cssLink;
+    const url = new URL("./parent-style.css", import.meta.url);
+    const urlFixed = new URL(url.pathname, rootHost);
+    linkElement.href = urlFixed.href;
+    document.head.appendChild(linkElement);
 }
 
 function loadChatterboxIframe() {
     const iframe = document.createElement("iframe");
-    iframe.src = `./chatterbox.html?config=${configLocation}`;
+    const configLocation = (window as any).CONFIG_LOCATION;
+    if (!configLocation) {
+        throw new Error("CONFIG_LOCATION is not set");
+    }
+    iframe.src = new URL("../chatterbox.html?config=" + configLocation, import.meta.url).href;
     iframe.className = "chatterbox-iframe";
     document.body.appendChild(iframe);
     isIframeLoaded = true;

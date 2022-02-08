@@ -1,14 +1,16 @@
-const { defineConfig } = require('vite')
+const { defineConfig } = require("vite")
 const { resolve } = require("path");
 
 module.exports = defineConfig({
     build: {
-    rollupOptions: {
-      input: {
-        main: resolve(__dirname, 'chatterbox.html'),
-        parent: resolve(__dirname, 'index.html')
-      }
+        rollupOptions: {
+            input: {
+                main: resolve(__dirname, "chatterbox.html"),
+                parent: resolve(__dirname, "index.html"),
+            },
         },
-        outDir: "./target"
-  },
+        outDir: "./target",
+        target: 'esnext',
+        assetsInlineLimit: 0,
+    }
 });
