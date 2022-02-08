@@ -6,7 +6,7 @@ module.exports = defineConfig(({ command }) => {
         return {
             // dev specific config
             define: {
-                cssFileName: JSON.stringify("parent-style.css"),
+                CSS_FILE_NAME: JSON.stringify("parent-style.css"),
             },
         };
     } else {

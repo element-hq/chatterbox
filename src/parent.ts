@@ -46,7 +46,7 @@ function renderStartButton() {
 function loadCSS() {
     const linkElement = document.createElement("link") as HTMLLinkElement;
     linkElement.rel = "stylesheet";
-    const urlFixed = new URL("cssFileName", parentRootHost);
+    const urlFixed = new URL("CSS_FILE_NAME", parentRootHost);
     linkElement.href = urlFixed.href;
     document.head.appendChild(linkElement);
 }

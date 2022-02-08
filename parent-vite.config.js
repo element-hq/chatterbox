@@ -15,6 +15,6 @@ module.exports = defineConfig({
         assetsInlineLimit: 0,
     },
     define: {
-        cssFileName: cssLink.replace(/assets\//, ""),
+        CSS_FILE_NAME: cssLink.replace(/assets\//, ""),
     }
 });
