@@ -9,9 +9,11 @@ module.exports = defineConfig({
             input: {
                 parent: resolve(__dirname, "index.html"),
             },
+            output: {
+                entryFileNames: "assets/[name].js",
+            },
         },
         outDir: "./target/parent",
-        target: 'esnext',
         assetsInlineLimit: 0,
     },
     define: {
