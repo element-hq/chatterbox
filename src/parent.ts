@@ -1,9 +1,9 @@
 import "./parent-style.css";
 
 let isIframeLoaded = false;
-const parentRootHost = (document.querySelector("#chatterbox-script") as HTMLScriptElement).src;
-const parentRootHostURL = new URL(parentRootHost);
-const rootHost = `${parentRootHostURL.protocol}${parentRootHostURL.host}`;
+const parentHostRoot = (document.querySelector("#chatterbox-script") as HTMLScriptElement).src;
+const parentHosRootURL = new URL(parentHostRoot);
+const hostRoot = `${parentHosRootURL.protocol}${parentHosRootURL.host}`;
 
 const sizeCollection = {
     "desktop": {
@@ -46,8 +46,7 @@ function renderStartButton() {
 function loadCSS() {
     const linkElement = document.createElement("link") as HTMLLinkElement;
     linkElement.rel = "stylesheet";
-    const urlFixed = new URL("CSS_FILE_NAME", parentRootHost);
-    linkElement.href = urlFixed.href;
+    linkElement.href = new URL("CSS_FILE_NAME", parentHostRoot).href;
     document.head.appendChild(linkElement);
 }
 
@@ -57,7 +56,7 @@ function loadChatterboxIframe() {
     if (!configLocation) {
         throw new Error("CONFIG_LOCATION is not set");
     }
-    iframe.src = new URL("../chatterbox.html?config=" + configLocation, rootHost).href;
+    iframe.src = new URL("../chatterbox.html?config=" + configLocation, hostRoot).href;
     iframe.className = "chatterbox-iframe";
     document.body.appendChild(iframe);
     isIframeLoaded = true;
