@@ -1,16 +1,29 @@
-const { defineConfig } = require("vite")
+const { defineConfig } = require("vite");
 const { resolve } = require("path");
 
-module.exports = defineConfig({
-    build: {
-        rollupOptions: {
-            input: {
-                main: resolve(__dirname, "chatterbox.html"),
-                parent: resolve(__dirname, "index.html"),
+module.exports = defineConfig(({ command }) => {
+    if (command === "serve") {
+        return {
+            // dev specific config
+            define: {
+                cssFileName: JSON.stringify("parent-style.css"),
             },
-        },
-        outDir: "./target",
-        target: 'esnext',
-        assetsInlineLimit: 0,
+        };
+    } else {
+        return {
+            // build specific config
+            build: {
+                rollupOptions: {
+                    input: {
+                        main: resolve(__dirname, "chatterbox.html"),
+                        parent: resolve(__dirname, "index.html"),
+                    },
+                },
+                outDir: "./target",
+                target: "esnext",
+                assetsInlineLimit: 0,
+                manifest: true,
+            },
+        };
     }
 });

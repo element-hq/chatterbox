@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "start": "vite",
-    "build": "tsc && vite build",
+    "build": "tsc && vite build && vite build --config parent-vite.config.js",
     "preview": "vite preview"
   },
   "devDependencies": {
