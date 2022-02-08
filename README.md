@@ -24,3 +24,10 @@ Follow the develop instructions above (steps 1-3), then:
 
 ### Embed Instructions
 ---
+Assuming that the build output (inside `/target`) is hosted at `<root>` (eg: chatterbox.element.io), copy and paste the following snippet before the closing `</body>` tag:
+```html
+	<script>
+		window.CONFIG_LOCATION = "path_to_config";
+	</script>
+	<script src="<root>/parent/assets/parent.js" type="module" id="chatterbox-script"></script>
+```
