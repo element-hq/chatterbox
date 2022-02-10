@@ -52,9 +52,9 @@ function loadCSS() {
 
 function loadChatterboxIframe() {
     const iframe = document.createElement("iframe");
-    const configLocation = (window as any).CONFIG_LOCATION;
+    const configLocation = (window as any).CHATTERBOX_CONFIG_LOCATION;
     if (!configLocation) {
-        throw new Error("CONFIG_LOCATION is not set");
+        throw new Error("CHATTERBOX_CONFIG_LOCATION is not set");
     }
     iframe.src = new URL("../chatterbox.html?config=" + configLocation, hostRoot).href;
     iframe.className = "chatterbox-iframe";
