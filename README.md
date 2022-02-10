@@ -29,5 +29,5 @@ Assuming that the build output (inside `/target`) is hosted at `<root>` (eg: cha
 	<script>
 		window.CHATTERBOX_CONFIG_LOCATION = "path_to_config";
 	</script>
-	<script src="<root>/parent/assets/parent.js" type="module" id="chatterbox-script"></script>
+	<script src="<root>/assets/parent.js" type="module" id="chatterbox-script"></script>
 ```
