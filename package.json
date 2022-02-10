@@ -1,6 +1,6 @@
 {
   "name": "chatterbox",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "scripts": {
     "start": "vite",
     "build": "tsc && vite build && vite build --config parent-vite.config.js && scripts/after-build.sh",
