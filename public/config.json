@@ -1,5 +1,5 @@
 {
-    "homeserver": "http://localhost:8008",
-    "auto_join_room": "!KiuRShFqxJLSoshNKa:localhost:8008",
-    "username_prefix": "testcorp"
+    "homeserver": "https://matrix.midhun.dev",
+    "auto_join_room": "!XOUozZcpOvneVFsrGi:matrix.midhun.dev",
+    "username_prefix": "foobar"
 }
