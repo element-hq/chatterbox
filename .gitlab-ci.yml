@@ -15,7 +15,7 @@ stages:
   - release
 
 variables:
-   PACKAGE_REGISTRY_URL: "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/releases"
+   PACKAGE_REGISTRY_URL: "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/chatterbox_releases"
 
 Build:
   stage: build
