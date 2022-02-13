@@ -63,6 +63,15 @@ export class ChatterboxViewModel extends ViewModel {
         return this._roomViewModel;
     }
 
+    get roomName() {
+        return this._options.config["header"]?.["title"] ?? this._roomViewModel.name;
+    }
+
+    get customAvatarURL() {
+        // has user specified specific avatar to use in config?
+        return this._options.config["header"]?.["avatar"];
+    }
+
     private get _session() {
         return this._client.session;
     }

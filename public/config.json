@@ -1,5 +1,9 @@
 {
     "homeserver": "https://matrix.midhun.dev",
     "auto_join_room": "!XOUozZcpOvneVFsrGi:matrix.midhun.dev",
-    "username_prefix": "foobar"
+    "username_prefix": "foobar",
+    "header": {
+        "title": "Chatterbox Test Room",
+        "avatar": "https://i.picsum.photos/id/907/200/200.jpg?hmac=SdeLZNONJ3CX-OB15hSXsCheWDC6yYac5N5VUJM7FIQ"
+    }
 }

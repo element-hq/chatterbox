@@ -34,9 +34,10 @@ class RoomHeaderView extends TemplateView<ChatterboxViewModel> {
     }
 
     render(t, vm: ChatterboxViewModel) {
+        const avatar = vm.customAvatarURL ? t.img({ className:"avatar", src: vm.customAvatarURL }) : t.view(new AvatarView(vm.roomViewModel, 30));
         return t.div({ className: "RoomHeaderView" }, [
-            t.view(new AvatarView(vm.roomViewModel, 30)),
-            t.div({ className: "RoomHeaderView_name" }, vm => vm.roomViewModel.name),
+            avatar,
+            t.div({ className: "RoomHeaderView_name" }, vm => vm.roomName),
             t.div({ className: "RoomHeaderView_menu" }, [
                 t.button({ className: "RoomHeaderView_menu_minimize", onClick: () => (window as any).sendMinimizeToParent() })
             ]),
