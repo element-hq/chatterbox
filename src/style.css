@@ -1,3 +1,5 @@
+@import url("./loader.css");
+
 :root {
     --main-bg-color: #5C56F5;
 }
@@ -20,15 +22,6 @@ body {
 
 #chatterbox .Timeline_messageAvatar {
     pointer-events: none;
-}
-
-#chatterbox .LoadingView {
-    flex-direction: column;
-    gap: 12px;
-}
-
-#chatterbox .spinner {
-    color: var(--main-bg-color);
 }
 
 /*
@@ -214,4 +207,38 @@ todo: this style should actually be in hydrogen-web
 .ChatterboxView .MessageComposer {
     display: flex;
     justify-content: center;
+}
+
+.ChatterboxLoadingView {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.AccountSetupView .ChatterboxLoadingView {
+    height: 311px;
+}
+
+.ChatterboxView .ChatterboxLoadingView {
+    height: 100%;
+}
+
+.LoadingText {
+    margin-top: 8px;
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 24px;
+}
+
+.chatterbox-spinner {
+    width: 64px;
+    height: 64px;
+    background: #fff;
+    border: 1px solid #E3E8F0;
+    box-sizing: border-box;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

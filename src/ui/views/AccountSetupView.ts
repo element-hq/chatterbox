@@ -1,6 +1,7 @@
-import { TemplateView, LoadingView } from "hydrogen-view-sdk";
+import { TemplateView } from "hydrogen-view-sdk";
 import { AccountSetupViewModel } from "../../viewmodels/AccountSetupViewModel";
-// import { LoadingView } from "./LoadingView";
+import { LoadingView } from "./LoadingView";
+
 import { FooterView } from "./FooterView";
 export class AccountSetupView extends TemplateView<AccountSetupViewModel> {
     constructor(value) {
