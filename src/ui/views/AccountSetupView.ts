@@ -1,6 +1,7 @@
 import { TemplateView, LoadingView } from "hydrogen-view-sdk";
 import { AccountSetupViewModel } from "../../viewmodels/AccountSetupViewModel";
-
+// import { LoadingView } from "./LoadingView";
+import { FooterView } from "./FooterView";
 export class AccountSetupView extends TemplateView<AccountSetupViewModel> {
     constructor(value) {
         super(value);
@@ -9,7 +10,10 @@ export class AccountSetupView extends TemplateView<AccountSetupViewModel> {
     render(t, vm: AccountSetupViewModel) {
         return t.div(
             { className: "AccountSetupView" },
-            t.mapView( (vm) => vm.privacyPolicyLink, (link) => link ? new PolicyAgreementView(vm) : new LoadingView())
+            [
+            t.mapView((vm) => vm.privacyPolicyLink, (link) => link ? new PolicyAgreementView(vm) : new LoadingView()),
+            t.view(new FooterView()),
+            ]
         );
     }
 }
