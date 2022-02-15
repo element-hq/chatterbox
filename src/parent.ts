@@ -7,8 +7,8 @@ const hostRoot = `${parentHosRootURL.protocol}${parentHosRootURL.host}`;
 
 const sizeCollection = {
     "desktop": {
-        "account-setup": { height: "110px", width: "360px" },
-        "timeline": {height: "600px", width: "375px"}
+        "account-setup": { height: "334px", width: "375px" },
+        "timeline": {height: "595px", width: "375px"}
     },
     "mobile": {
         "account-setup": { height: "100vh", width: "100vw" },
