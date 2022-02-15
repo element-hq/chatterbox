@@ -1,3 +1,7 @@
+:root {
+    --main-bg-color: #5C56F5;
+}
+
 body {
     margin: 0;
 }
@@ -6,7 +10,8 @@ body {
     position: absolute;
     width: 100vw;
     height: 100vh;
-    border-radius: 5px;
+    border-radius: 12px;
+    background: #F4F6FA;
 }
 
 #chatterbox .Timeline {
@@ -15,6 +20,15 @@ body {
 
 #chatterbox .Timeline_messageAvatar {
     pointer-events: none;
+}
+
+#chatterbox .LoadingView {
+    flex-direction: column;
+    gap: 12px;
+}
+
+#chatterbox .spinner {
+    color: var(--main-bg-color);
 }
 
 /*
@@ -26,45 +40,97 @@ todo: this style should actually be in hydrogen-web
     left: 0;
 }
 
-.StartChat {
-    width: 32px;
-    height: 32px;
-    border: none;
-    background: no-repeat center url('./ui/res/chat-bubbles.svg'), #295dbd;
-    border-radius: 2px;
-    cursor: pointer;
-}
-
 .AccountSetupView {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-evenly;
     height: 100%;
     width: 100%;
 }
 
-.PolicyAgreementView-text {
-    padding-bottom: 10px;
+.PolicyAgreementView {
+    width: 100%;
+    height: 311px;
 }
 
-.PolicyAgreementView-next, .PolicyAgreementView-cancel {
+.PolicyAgreementView_title {
+    font-weight: 600;
+    font-size: 18px;
+    margin-top: 52px;
+    text-align: center;
+}
+
+.PolicyAgreementView_text {
+    margin-top: 16px;
+    padding: 0 32px;
+    width: 311px;
+    text-align: center;
+    font-weight: 400;
+    font-size: 15px;
+}
+
+.PolicyAgreementView_next {
     display: flex;
     padding: 10px;
-    width: 85px;
+    width: 311px;
+    height: 48px;
     justify-content: center;
-}
-
-.PolicyAgreementView-btn-collection .PolicyAgreementView-cancel {
-    border: 1px solid #03B381;
+    align-items: center;
+    margin-top: 32px;
+    background: var(--main-bg-color);
+    border: none;
+    font-weight: 600;
+    color: white;
     border-radius: 8px;
+    cursor: pointer;
 }
 
-.PolicyAgreementView-btn-collection {
+.PolicyAgreementView_cancel {
+    margin-top: 12px;
+    color: #737D8C;
+}
+
+.PolicyAgreementView_btn-collection {
     display: flex;
-    justify-content: space-evenly;
-    flex-direction: row;
+    flex-direction: column;
     width: 100%;
+    align-items: center;
+}
+
+.FooterView_logo {
+    filter: brightness(0) saturate(100%) invert(41%) sepia(81%) saturate(5403%) hue-rotate(233deg) brightness(99%) contrast(94%);
+    height: 16px;
+    width: 16px;
+}
+
+.FooterView_chatterbox-branding {
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 15px;
+    color: var(--main-bg-color);
+    margin-left: 4px;
+}
+
+.FooterView {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 33px;
+}
+
+.ChatterboxView .FooterView {
+    margin: 10.5px 0;
+}
+
+.FooterView>div {
+    display: flex;
+    align-items: center;
+}
+
+.FooterView_matrix-branding {
+    font-size: 12px;
+    line-height: 15px;
+    color: #737D8C;
 }
 
 .ChatterboxView {
@@ -79,12 +145,14 @@ todo: this style should actually be in hydrogen-web
     grid-template-columns: 1fr 6fr 1fr;
     align-items: center;
     padding: 10px 15px;
-    height: 35px;
-    background-color: #295dbd;
-    border-radius: 5px 5px 0 0;
-    color: white;
+    height: 64px;
+    background-color: #ffffff;
+    border-radius: 12px 12px 0px 0px;
+    border: 1px solid #E3E8F0;
+    color: #17191C;
     font-weight: 600;
-    font-size: 1.5rem;
+    font-size: 15px;
+    line-height: 24px;
 }
 
 .RoomHeaderView_menu {
@@ -93,7 +161,7 @@ todo: this style should actually be in hydrogen-web
 }
 
 .RoomHeaderView_menu_minimize {
-    background: url("./ui/res/chevron-down.svg") no-repeat;
+    background: url("./ui/res/chevron-down.svg") no-repeat center;
     height: 20px;
     width: 20px;
     border: none;
@@ -101,7 +169,9 @@ todo: this style should actually be in hydrogen-web
 }
 
 .RoomHeaderView .avatar {
-    border-radius: 2px;
+    border-radius: 100%;
+    background: var(--main-bg-color);
+    border: 2px solid rgba(255, 255, 255, 0.8);
 }
 
 .ChatterboxView_footer {
@@ -120,7 +190,28 @@ todo: this style should actually be in hydrogen-web
     padding-left: 4px;
 }
 
+.ChatterboxView .MessageComposer_input {
+    background: #FFFFFF;
+    border: 1px solid #E3E8F0;
+    border-radius: 8px;
+    width: 351px;
+    height: 56px;
+    box-sizing: border-box;
+}
+
 .ChatterboxView .MessageComposer_input>textarea {
-    border-radius: 5px;
-    border: #c2bebe 1.5px solid;
+    background: #FFFFFF;
+}
+
+.ChatterboxView .MessageComposer_input>textarea:focus-visible {
+    outline: none;
+}
+
+.ChatterboxView .MessageComposer_input .send {
+    background-color: var(--main-bg-color);
+}
+
+.ChatterboxView .MessageComposer {
+    display: flex;
+    justify-content: center;
 }
