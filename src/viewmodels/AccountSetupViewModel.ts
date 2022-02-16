@@ -7,10 +7,11 @@ import "hydrogen-view-sdk/style.css";
 export class AccountSetupViewModel extends ViewModel {
     private _config: IChatterboxConfig;
     private _client: typeof Client;
-    private _termsStage?: any;
+    private _startStage?: any;
     private _password: string;
     private _username: string;
     private _registration: any;
+    private _privacyPolicyLink: string;
 
     constructor(options) {
         super(options);
@@ -26,11 +27,16 @@ export class AccountSetupViewModel extends ViewModel {
             try {
                 this._username = `${this._config.username_prefix}-${generateUsername(10)}`;
                 this._registration = await this._client.startRegistration(this._homeserver, this._username, this._password, "Chatterbox");
-                const stage = await this._registration.start();
-                if (stage.type === "m.login.terms") {
-                    this._termsStage = stage;
-                    this.emitChange("termsStage");
+                this._startStage = await this._registration.start();
+                let stage = this._startStage;
+                while (stage.type !== "m.login.terms") {
+                    stage = stage.nextStage;
+                    if (!stage) {
+                        throw new Error("Terms login stage not found");
+                    }
                 }
+                this._privacyPolicyLink = stage.privacyPolicy.en?.url;
+                this.emitChange("privacyPolicyLink");
                 break;
             }
             catch (e) {
@@ -42,8 +48,14 @@ export class AccountSetupViewModel extends ViewModel {
     }
 
     async completeRegistration() {
-        let stage = this._termsStage;
+        let stage = this._startStage;
         while (stage) {
+            if (
+                stage.type === "m.login.registration_token" ||
+                stage.type === "org.matrix.msc3231.login.registration_token"
+            ) {
+                stage.setToken(this._config.token);
+            }
             stage = await this._registration.submitStage(stage);
         }
         const loginPromise = this.login(this._username, this._password);
@@ -71,6 +83,6 @@ export class AccountSetupViewModel extends ViewModel {
     }
 
     get privacyPolicyLink() {
-        return this._termsStage?.privacyPolicy.en?.url;
+        return this._privacyPolicyLink;
     }
 }
