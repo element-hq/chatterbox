@@ -6,6 +6,8 @@ export interface IChatterboxConfig {
     username_prefix: string;
     // Configurations for header on chatterbox (containing title, avatar, minimize button)
     header: IHeader;
+    // Token needed for token-authenticated registration
+    token: string;
 }
 
 interface IHeader {
