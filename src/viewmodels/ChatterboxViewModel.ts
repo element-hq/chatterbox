@@ -30,7 +30,7 @@ export class ChatterboxViewModel extends ViewModel {
             navigation: this.navigation,
         });
         await this._roomViewModel.load();
-        this.emitChange("timelineViewModel");
+        this.emitChange("roomViewModel");
     }
 
     private async createRoomWithUserSpecifiedInConfig() {
