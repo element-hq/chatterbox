@@ -33,6 +33,11 @@ todo: this style should actually be in hydrogen-web
     left: 0;
 }
 
+#chatterbox .MessageComposer_input:focus-within {
+    outline: 1px solid #5C56F5;
+    box-shadow: 0px 0px 0px 4px rgba(92, 86, 245, 0.1);
+}
+
 .AccountSetupView {
     display: flex;
     flex-direction: column;
