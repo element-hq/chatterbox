@@ -2,6 +2,7 @@
 
 #chatterbox .Timeline {
     flex-grow: 2;
+    padding-bottom: 15px;
 }
 
 #chatterbox .Timeline_messageAvatar {
