@@ -11,6 +11,6 @@
     "vite": "^2.7.2"
   },
   "dependencies": {
-    "hydrogen-view-sdk": "^0.0.7"
+    "hydrogen-view-sdk": "^0.0.8"
   }
 }
