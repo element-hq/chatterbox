@@ -71,7 +71,6 @@ export class ChatterboxViewModel extends ViewModel {
     }
 
     private _waitForRoomFromSync(roomId: string): Promise<void> {
-        console.log("waiting for room from sync");
         let resolve: () => void;
         const promise: Promise<void> = new Promise(r => { resolve = r; })
         const subscription = {
