@@ -158,10 +158,10 @@ has@^1.0.3:
   dependencies:
     function-bind "^1.1.1"
 
-hydrogen-view-sdk@^0.0.7:
-  version "0.0.7"
-  resolved "https://registry.yarnpkg.com/hydrogen-view-sdk/-/hydrogen-view-sdk-0.0.7.tgz#36c153088d7a2bfd3bfe478eb7b37af18e6abf7b"
-  integrity sha512-gmf7Qopjx+2S3DCnuQLS4oxtqLZNVHhAd+U1J8sAj3G1gO7YiAckjwsalnhFZpe0fQkBS/A07yZa4wh4/j4ajw==
+hydrogen-view-sdk@^0.0.8:
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/hydrogen-view-sdk/-/hydrogen-view-sdk-0.0.8.tgz#9c9268cc96890568406393686717729d81a28635"
+  integrity sha512-n4Lr8mZZ//hpYCtnYCsr44Ep0bg9TwCQ5C4HiK+7gGeEeZvOYBp3HMDPMLGXp2mQId9ZrbL1cBRwq1ZfHiUTGw==
   dependencies:
     "@matrix-org/olm" "https://gitlab.matrix.org/api/v4/projects/27/packages/npm/@matrix-org/olm/-/@matrix-org/olm-3.2.3.tgz"
     another-json "^0.2.0"

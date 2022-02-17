@@ -1,7 +1,6 @@
-import { RoomViewModel, ViewModel, ComposerViewModel} from "hydrogen-view-sdk";
+import { RoomViewModel, ViewModel, RoomStatus} from "hydrogen-view-sdk";
 
 export class ChatterboxViewModel extends ViewModel {
-    private _messageComposerViewModel?: typeof ComposerViewModel;
     private _roomViewModel?: typeof RoomViewModel;
     private _loginPromise: Promise<void>;
 
@@ -11,11 +10,18 @@ export class ChatterboxViewModel extends ViewModel {
         this._loginPromise = options.loginPromise;
     }
 
-    async loadRoom() {
+    async load() {
         // wait until login is completed
         await this._loginPromise;
-        const roomId = this._options.config["auto_join_room"];
-        const room = this._session.rooms.get(roomId) ?? await this._joinRoom(roomId);
+        let room;
+        if (this._options.config["invite_user"]) {
+            room = await this.createRoomWithUserSpecifiedInConfig();
+        } else if(this._options.config["auto_join_room"]) {
+            room = await this.joinRoomSpecifiedInConfig();
+        }
+        else {
+            throw new Error("ConfigError: You must either specify 'invite_user' or 'auto_join_room'");
+        }
         this._roomViewModel = new RoomViewModel({
             room,
             ownUserId: this._session.userId,
@@ -24,16 +30,44 @@ export class ChatterboxViewModel extends ViewModel {
             navigation: this.navigation,
         });
         await this._roomViewModel.load();
-        this._messageComposerViewModel = new ComposerViewModel(this._roomViewModel);
-        this.emitChange("timelineViewModel");
+        this.emitChange("roomViewModel");
     }
 
-    private async _joinRoom(roomId: string): Promise<any> {
-        await this._session.joinRoom(roomId);
-        // even though we've joined the room, we need to wait till the next sync to get the room
-        await this._waitForRoomFromSync(roomId);
-        return this._session.rooms.get(roomId);
+    private async createRoomWithUserSpecifiedInConfig() {
+        const userId = this._options.config["invite_user"];
+        let room = this._session.findDirectMessageForUserId(userId);
+        if (room) {
+            // we already have a DM with this user
+            return room;
+        }
+        const roomBeingCreated = this._session.createRoom({
+            type: 1, //todo: use enum from hydrogen-sdk here
+            name: undefined,
+            topic: undefined,
+            isEncrypted: false,
+            isFederationDisabled: false,
+            alias: undefined,
+            avatar: undefined,
+            invites: [userId],
+        });
+        const roomStatusObservable = await this._session.observeRoomStatus(roomBeingCreated.id);
+        await roomStatusObservable.waitFor(status => status === (RoomStatus.BeingCreated | RoomStatus.Replaced)).promise;
+        const roomId = roomBeingCreated.roomId;
+        room = this._session.rooms.get(roomId);
+        return room;
+    }
 
+    private async joinRoomSpecifiedInConfig() {
+        const roomId = this._options.config["auto_join_room"];
+        let room = this._session.rooms.get(roomId);
+        if (!room) {
+            // user is not in specified room, so join it
+            await this._session.joinRoom(roomId);
+            // even though we've joined the room, we need to wait till the next sync to get the room
+            await this._waitForRoomFromSync(roomId);
+            room = this._session.rooms.get(roomId); 
+        }
+        return room;
     }
 
     private _waitForRoomFromSync(roomId: string): Promise<void> {
@@ -46,6 +80,8 @@ export class ChatterboxViewModel extends ViewModel {
                     resolve();
                 }
             },
+            onUpdate: () => undefined,
+            onRemove: () => undefined,
         };
         this._session.rooms.subscribe(subscription);
         return promise;
@@ -56,7 +92,7 @@ export class ChatterboxViewModel extends ViewModel {
     }
 
     get messageComposerViewModel() {
-        return this._messageComposerViewModel;
+        return this._roomViewModel?.composerViewModel;
     }
     
     get roomViewModel() {
