@@ -36,6 +36,12 @@ export class ChatterboxViewModel extends ViewModel {
     }
 
     private async createRoomWithUserSpecifiedInConfig() {
+        const userId = this._options.config["invite_user"];
+        let room = this._session.findDirectMessageForUserId(userId);
+        if (room) {
+            // we already have a DM with this user
+            return room;
+        }
         const roomBeingCreated = this._session.createRoom({
             type: 1,
             name: this._name ?? undefined,
@@ -44,11 +50,11 @@ export class ChatterboxViewModel extends ViewModel {
             isFederationDisabled: false,
             alias: undefined,
             avatar: undefined,
-            invites: [this._options.config["invite_user"]],
+            invites: [userId],
         });
         await this._waitForRoomCreation(roomBeingCreated);
         const roomId = roomBeingCreated.roomId;
-        let room = this._session.rooms.get(roomId);
+        room = this._session.rooms.get(roomId);
         if (!room) {
             await this._waitForRoomFromSync(roomId);
             room = this._session.rooms.get(roomId);
