@@ -1,4 +1,4 @@
-import { RoomViewModel, ViewModel, ComposerViewModel} from "hydrogen-view-sdk";
+import { RoomViewModel, ViewModel, ComposerViewModel, RoomStatus} from "hydrogen-view-sdk";
 
 export class ChatterboxViewModel extends ViewModel {
     private _messageComposerViewModel?: typeof ComposerViewModel;
@@ -52,13 +52,10 @@ export class ChatterboxViewModel extends ViewModel {
             avatar: undefined,
             invites: [userId],
         });
-        await this._waitForRoomCreation(roomBeingCreated);
+        const roomStatusObservable = await this._session.observeRoomStatus(roomBeingCreated.id);
+        await roomStatusObservable.waitFor(status => status === (RoomStatus.BeingCreated | RoomStatus.Replaced)).promise;
         const roomId = roomBeingCreated.roomId;
         room = this._session.rooms.get(roomId);
-        if (!room) {
-            await this._waitForRoomFromSync(roomId);
-            room = this._session.rooms.get(roomId);
-        }
         return room;
     }
 
@@ -76,6 +73,7 @@ export class ChatterboxViewModel extends ViewModel {
     }
 
     private _waitForRoomFromSync(roomId: string): Promise<void> {
+        console.log("waiting for room from sync");
         let resolve: () => void;
         const promise: Promise<void> = new Promise(r => { resolve = r; })
         const subscription = {
@@ -89,17 +87,6 @@ export class ChatterboxViewModel extends ViewModel {
             onRemove: () => undefined,
         };
         this._session.rooms.subscribe(subscription);
-        return promise;
-    }
-
-    private _waitForRoomCreation(roomBeingCreated): Promise<void> {
-        let resolve: () => void;
-        const promise: Promise<void> = new Promise(r => { resolve = r; })
-        roomBeingCreated.on("change", () => {
-            if (roomBeingCreated.roomId) {
-                resolve();
-            }
-        });
         return promise;
     }
 
