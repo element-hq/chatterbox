@@ -1,6 +1,8 @@
-import { TemplateView, LoadingView } from "hydrogen-view-sdk";
+import { TemplateView } from "hydrogen-view-sdk";
 import { AccountSetupViewModel } from "../../viewmodels/AccountSetupViewModel";
+import { LoadingView } from "./LoadingView";
 
+import { FooterView } from "./FooterView";
 export class AccountSetupView extends TemplateView<AccountSetupViewModel> {
     constructor(value) {
         super(value);
@@ -9,7 +11,10 @@ export class AccountSetupView extends TemplateView<AccountSetupViewModel> {
     render(t, vm: AccountSetupViewModel) {
         return t.div(
             { className: "AccountSetupView" },
-            t.mapView( (vm) => vm.privacyPolicyLink, (link) => link ? new PolicyAgreementView(vm) : new LoadingView())
+            [
+            t.mapView((vm) => vm.privacyPolicyLink, (link) => link ? new PolicyAgreementView(vm) : new LoadingView()),
+            t.view(new FooterView()),
+            ]
         );
     }
 }
@@ -21,16 +26,17 @@ class PolicyAgreementView extends TemplateView<AccountSetupViewModel> {
 
     render(t, vm: AccountSetupViewModel) {
         return t.div({ className: "PolicyAgreementView" }, [
-            t.div({ className: "PolicyAgreementView-text"},
+            t.div({ className: "PolicyAgreementView_title" }, "Your privacy comes first"),
+            t.div({ className: "PolicyAgreementView_text" },
                 [
-                "By continuing you agree to the ",
-                t.a({ href: vm.privacyPolicyLink }, "Privacy Policy"),
-            ]),
-            t.div(
-                { className: "PolicyAgreementView-btn-collection" },
+                    "Please accept our ",
+                    t.a({ href: vm.privacyPolicyLink }, "Privacy Policy"),
+                    " before proceeding to the chat.",
+                ]),
+            t.div({ className: "PolicyAgreementView_btn-collection" },
                 [
-                t.button( { onClick: () => (window as any).sendMinimizeToParent(), className: "button-action secondary PolicyAgreementView-cancel", }, "Cancel"),
-                t.button( { onClick: () => vm.completeRegistration(), className: "PolicyAgreementView-next button-action primary", }, "Next")
+                    t.button({ onClick: () => vm.completeRegistration(), className: "PolicyAgreementView_next", }, "Accept and continue to chat"),
+                    t.button({ onClick: () => (window as any).sendMinimizeToParent(), className: "button-action PolicyAgreementView_cancel", }, "Cancel"),
                 ]),
         ]);
     }

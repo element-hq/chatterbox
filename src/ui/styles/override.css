@@ -1,0 +1,50 @@
+/* CSS styles overridden from Hydrogen */
+
+#chatterbox .Timeline {
+    flex-grow: 2;
+    padding-bottom: 15px;
+}
+
+#chatterbox .Timeline_messageAvatar {
+    pointer-events: none;
+}
+
+/*
+todo: this style should actually be in hydrogen-web
+*/
+#chatterbox .popupContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+#chatterbox .MessageComposer_input:focus-within {
+    outline: 1px solid #5C56F5;
+    box-shadow: 0px 0px 0px 4px rgba(92, 86, 245, 0.1);
+}
+
+.ChatterboxView .MessageComposer_input {
+    background: #FFFFFF;
+    border: 1px solid #E3E8F0;
+    border-radius: 8px;
+    width: 351px;
+    height: 56px;
+    box-sizing: border-box;
+}
+
+.ChatterboxView .MessageComposer_input>textarea {
+    background: #FFFFFF;
+}
+
+.ChatterboxView .MessageComposer_input>textarea:focus-visible {
+    outline: none;
+}
+
+.ChatterboxView .MessageComposer_input .send {
+    background-color: var(--main-bg-color);
+}
+
+.ChatterboxView .MessageComposer {
+    display: flex;
+    justify-content: center;
+}

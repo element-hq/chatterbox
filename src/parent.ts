@@ -7,8 +7,8 @@ const hostRoot = `${parentHosRootURL.protocol}${parentHosRootURL.host}`;
 
 const sizeCollection = {
     "desktop": {
-        "account-setup": { height: "110px", width: "360px" },
-        "timeline": {height: "600px", width: "375px"}
+        "account-setup": { height: "334px", width: "375px" },
+        "timeline": {height: "595px", width: "375px"}
     },
     "mobile": {
         "account-setup": { height: "100vh", width: "100vw" },
@@ -37,7 +37,7 @@ function renderStartButton() {
     const container = document.createElement("div");
     container.className = "start";
     const button = document.createElement("button");
-    button.className = "StartChat";
+    button.className = "start-chat-btn";
     button.onclick = () => isIframeLoaded? minimizeIframe() : loadChatterboxIframe();
     container.appendChild(button);
     document.body.appendChild(container);
@@ -60,24 +60,27 @@ function loadChatterboxIframe() {
     iframe.className = "chatterbox-iframe";
     document.body.appendChild(iframe);
     isIframeLoaded = true;
+    document.querySelector(".start-chat-btn").classList.add("start-background-minimized");
     if (isMobile()) {
-        (document.querySelector(".start") as HTMLButtonElement).style.display = "none";
+        (document.querySelector(".start") as HTMLDivElement).style.display = "none";
     }
 }
 
 function minimizeIframe() {
     const iframeElement = document.querySelector(".chatterbox-iframe") as HTMLIFrameElement;
-    const startButton = document.querySelector(".start") as HTMLButtonElement;
+    const startButtonDiv = document.querySelector(".start") as HTMLDivElement;
     if (iframeElement.style.display !== "none") {
         iframeElement.style.display = "none";
+        document.querySelector(".start-chat-btn").classList.remove("start-background-minimized");
         if (isMobile()) {
-            startButton.style.display = "block";
+            startButtonDiv.style.display = "block";
         }
     }
     else {
         iframeElement.style.display = "block";
+        document.querySelector(".start-chat-btn").classList.add("start-background-minimized");
         if (isMobile()) {
-            startButton.style.display = "none";
+            startButtonDiv.style.display = "none";
         }
     }
 }
