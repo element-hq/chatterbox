@@ -27,7 +27,7 @@ body {
 
 .PolicyAgreementView {
     width: 100%;
-    height: 311px;
+    flex: 1;
 }
 
 .PolicyAgreementView_title {
@@ -175,7 +175,7 @@ body {
 }
 
 .AccountSetupView .ChatterboxLoadingView {
-    height: 311px;
+    flex: 1
 }
 
 .ChatterboxView .ChatterboxLoadingView {
