@@ -1,7 +1,6 @@
-import { RoomViewModel, ViewModel, ComposerViewModel, RoomStatus} from "hydrogen-view-sdk";
+import { RoomViewModel, ViewModel, RoomStatus} from "hydrogen-view-sdk";
 
 export class ChatterboxViewModel extends ViewModel {
-    private _messageComposerViewModel?: typeof ComposerViewModel;
     private _roomViewModel?: typeof RoomViewModel;
     private _loginPromise: Promise<void>;
 
@@ -31,7 +30,6 @@ export class ChatterboxViewModel extends ViewModel {
             navigation: this.navigation,
         });
         await this._roomViewModel.load();
-        this._messageComposerViewModel = new ComposerViewModel(this._roomViewModel);
         this.emitChange("timelineViewModel");
     }
 
@@ -95,7 +93,7 @@ export class ChatterboxViewModel extends ViewModel {
     }
 
     get messageComposerViewModel() {
-        return this._messageComposerViewModel;
+        return this._roomViewModel?.composerViewModel;
     }
     
     get roomViewModel() {
