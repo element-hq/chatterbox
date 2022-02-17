@@ -43,9 +43,9 @@ export class ChatterboxViewModel extends ViewModel {
             return room;
         }
         const roomBeingCreated = this._session.createRoom({
-            type: 1,
-            name: this._name ?? undefined,
-            topic: this._topic ?? undefined,
+            type: 1, //todo: use enum from hydrogen-sdk here
+            name: undefined,
+            topic: undefined,
             isEncrypted: false,
             isFederationDisabled: false,
             alias: undefined,
