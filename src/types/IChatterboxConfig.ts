@@ -1,9 +1,12 @@
 export interface IChatterboxConfig {
 	homeserver: string;
-    // internal room-id of the room to which chatterbox should join
+    // Internal room-id of the room to which chatterbox should join
 	auto_join_room: string;
-    // string that is to be prepended to the generated random usernames
+    // String that is to be prepended to the generated random usernames
     username_prefix: string;
+    // If specified, chatterbox will create a dm with this user
+    // This option takes precedence over 'auto_join_room'
+    invite_user: string;
     // Configurations for header on chatterbox (containing title, avatar, minimize button)
     header: IHeader;
     // Token needed for token-authenticated registration

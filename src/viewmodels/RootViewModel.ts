@@ -45,7 +45,7 @@ export class RootViewModel extends ViewModel {
                     loginPromise,
                 })
             ));
-            this._chatterBoxViewModel.loadRoom();
+            this._chatterBoxViewModel.load();
         }
         this.emitChange("activeSection");
     }

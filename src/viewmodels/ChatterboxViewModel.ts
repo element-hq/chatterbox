@@ -11,11 +11,18 @@ export class ChatterboxViewModel extends ViewModel {
         this._loginPromise = options.loginPromise;
     }
 
-    async loadRoom() {
+    async load() {
         // wait until login is completed
         await this._loginPromise;
-        const roomId = this._options.config["auto_join_room"];
-        const room = this._session.rooms.get(roomId) ?? await this._joinRoom(roomId);
+        let room;
+        if (this._options.config["invite_user"]) {
+            room = await this.createRoomWithUserSpecifiedInConfig();
+        } else if(this._options.config["auto_join_room"]) {
+            room = await this.joinRoomSpecifiedInConfig();
+        }
+        else {
+            throw new Error("ConfigError: You must either specify 'invite_user' or 'auto_join_room'");
+        }
         this._roomViewModel = new RoomViewModel({
             room,
             ownUserId: this._session.userId,
@@ -28,12 +35,38 @@ export class ChatterboxViewModel extends ViewModel {
         this.emitChange("timelineViewModel");
     }
 
-    private async _joinRoom(roomId: string): Promise<any> {
-        await this._session.joinRoom(roomId);
-        // even though we've joined the room, we need to wait till the next sync to get the room
-        await this._waitForRoomFromSync(roomId);
-        return this._session.rooms.get(roomId);
+    private async createRoomWithUserSpecifiedInConfig() {
+        const roomBeingCreated = this._session.createRoom({
+            type: 1,
+            name: this._name ?? undefined,
+            topic: this._topic ?? undefined,
+            isEncrypted: false,
+            isFederationDisabled: false,
+            alias: undefined,
+            avatar: undefined,
+            invites: [this._options.config["invite_user"]],
+        });
+        await this._waitForRoomCreation(roomBeingCreated);
+        const roomId = roomBeingCreated.roomId;
+        let room = this._session.rooms.get(roomId);
+        if (!room) {
+            await this._waitForRoomFromSync(roomId);
+            room = this._session.rooms.get(roomId);
+        }
+        return room;
+    }
 
+    private async joinRoomSpecifiedInConfig() {
+        const roomId = this._options.config["auto_join_room"];
+        let room = this._session.rooms.get(roomId);
+        if (!room) {
+            // user is not in specified room, so join it
+            await this._session.joinRoom(roomId);
+            // even though we've joined the room, we need to wait till the next sync to get the room
+            await this._waitForRoomFromSync(roomId);
+            room = this._session.rooms.get(roomId); 
+        }
+        return room;
     }
 
     private _waitForRoomFromSync(roomId: string): Promise<void> {
@@ -46,8 +79,21 @@ export class ChatterboxViewModel extends ViewModel {
                     resolve();
                 }
             },
+            onUpdate: () => undefined,
+            onRemove: () => undefined,
         };
         this._session.rooms.subscribe(subscription);
+        return promise;
+    }
+
+    private _waitForRoomCreation(roomBeingCreated): Promise<void> {
+        let resolve: () => void;
+        const promise: Promise<void> = new Promise(r => { resolve = r; })
+        roomBeingCreated.on("change", () => {
+            if (roomBeingCreated.roomId) {
+                resolve();
+            }
+        });
         return promise;
     }
 
