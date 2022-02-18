@@ -4,3 +4,4 @@ dist
 dist-ssr
 target
 *.local
+release
