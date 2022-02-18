@@ -138,7 +138,7 @@ body {
 }
 
 .RoomHeaderView_menu_minimize {
-    background: url("./ui/res/chevron-down.svg") no-repeat center;
+    background: url("../res/chevron-down.svg") no-repeat center;
     height: 20px;
     width: 20px;
     border: none;
