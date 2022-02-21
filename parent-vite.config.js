@@ -1,5 +1,11 @@
+/**
+ * We do a second build for parent (the first one builds both parent and chatterbox-app) because we need
+ * the link to the CSS file for parent with the asset-hash included.
+ */
 const { defineConfig } = require("vite")
 const { resolve } = require("path");
+
+// We've configured the first build to produce a manifest.json that tells us what the asset-hashed file names are.
 import manifestJSON from "./target/manifest.json";
 
 const cssLink = manifestJSON["index.html"]["css"][0];
