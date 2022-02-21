@@ -2,8 +2,7 @@ import "./parent-style.css";
 
 let isIframeLoaded = false;
 const parentHostRoot = (document.querySelector("#chatterbox-script") as HTMLScriptElement).src;
-const parentHosRootURL = new URL(parentHostRoot);
-const hostRoot = `${parentHosRootURL.protocol}${parentHosRootURL.host}`;
+const hostRoot = new URL(parentHostRoot).origin;
 
 const sizeCollection = {
     "desktop": {
