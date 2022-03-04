@@ -5,3 +5,4 @@ dist-ssr
 target
 *.local
 release
+.idea
