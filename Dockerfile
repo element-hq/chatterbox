@@ -10,6 +10,6 @@ COPY . .
 
 RUN yarn build
 
-FROM nginx:1.21.6
+FROM nginxinc/nginx-unprivileged:1.21.6
 
 COPY --from=build /app/target/assets /usr/share/nginx/html/assets
