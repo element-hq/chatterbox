@@ -31,7 +31,9 @@ export class AccountSetupViewModel extends ViewModel {
                 while (stage.type !== "m.login.terms") {
                     stage = stage.nextStage;
                     if (!stage) {
-                        throw new Error("Terms login stage not found");
+                        // If terms login stage is not found, go straight to completeRegistration()
+                        this.completeRegistration();
+                        return;
                     }
                 }
                 this._privacyPolicyLink = stage.privacyPolicy.en?.url;
