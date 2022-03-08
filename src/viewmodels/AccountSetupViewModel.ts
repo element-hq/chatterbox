@@ -28,11 +28,13 @@ export class AccountSetupViewModel extends ViewModel {
                 this._registration = await this._client.startRegistration(this._homeserver, username, this._password, "Chatterbox");
                 this._startStage = await this._registration.start();
                 let stage = this._startStage;
-                while (stage.type !== "m.login.terms") {
+                while (stage && stage.type !== "m.login.terms") {
                     stage = stage.nextStage;
-                    if (!stage) {
-                        throw new Error("Terms login stage not found");
-                    }
+                }
+                if (!stage) {
+                    // If terms login stage is not found, go straight to completeRegistration()
+                    this.completeRegistration();
+                    return;
                 }
                 this._privacyPolicyLink = stage.privacyPolicy.en?.url;
                 this.emitChange("privacyPolicyLink");
