@@ -9,7 +9,6 @@ export class AccountSetupViewModel extends ViewModel {
     private _client: typeof Client;
     private _startStage?: any;
     private _password: string;
-    private _username: string;
     private _registration: any;
     private _privacyPolicyLink: string;
 
@@ -25,8 +24,8 @@ export class AccountSetupViewModel extends ViewModel {
         const maxAttempts = 10;
         for (let i = 0; i < maxAttempts; ++i) {
             try {
-                this._username = `${this._config.username_prefix}-${generateUsername(10)}`;
-                this._registration = await this._client.startRegistration(this._homeserver, this._username, this._password, "Chatterbox");
+                const username = `${this._config.username_prefix}-${generateUsername(10)}`;
+                this._registration = await this._client.startRegistration(this._homeserver, username, this._password, "Chatterbox");
                 this._startStage = await this._registration.start();
                 let stage = this._startStage;
                 while (stage.type !== "m.login.terms") {
@@ -58,12 +57,13 @@ export class AccountSetupViewModel extends ViewModel {
             }
             stage = await this._registration.submitStage(stage);
         }
-        const loginPromise = this.login(this._username, this._password);
+        const loginPromise = this.login(this._password);
         this.navigation.push("timeline", loginPromise);
     }
 
-    async login(username: string, password: string): Promise<void> {
+    async login(password: string): Promise<void> {
         const loginOptions = await this._client.queryLogin(this._homeserver).result;
+        const username = this._registration.sessionInfo.user_id;
         this._client.startWithLogin(loginOptions.password(username, password));
         await this._client.loadStatus.waitFor((status: string) => {
             return status === LoadStatus.Ready ||
