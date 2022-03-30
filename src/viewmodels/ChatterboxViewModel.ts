@@ -8,6 +8,10 @@ export class ChatterboxViewModel extends ViewModel {
         super(options);
         this._client = options.client;
         this._loginPromise = options.loginPromise;
+        
+        const queryParams = new URLSearchParams(window.location.search);
+        const inviteUser = decodeURIComponent(queryParams.get("invite_user"));
+        this._options.config["invite_user"] = inviteUser;
     }
 
     async load() {
