@@ -8,7 +8,7 @@ Chatterbox lets you securely embed [Hydrogen](https://github.com/vector-im/hydro
     yarn install
     ```
 3) Modify config.json in `public` directory with your homeserver details.  
-(See `types/IChatterboxConfig.ts`)
+(See [`types/IChatterboxConfig.ts`](https://github.com/vector-im/chatterbox/blob/main/src/types/IChatterboxConfig.ts) for the format)
 4) Start develop server:
     ```properties
     yarn start
