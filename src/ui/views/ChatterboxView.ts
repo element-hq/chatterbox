@@ -1,4 +1,4 @@
-import { TemplateView, TimelineView, AvatarView } from "hydrogen-view-sdk";
+import { TemplateView, TimelineView, AvatarView, viewClassForTile } from "hydrogen-view-sdk";
 import { MessageComposer } from "hydrogen-view-sdk";
 import { ChatterboxViewModel } from "../../viewmodels/ChatterboxViewModel";
 import { FooterView } from "./FooterView";
@@ -17,7 +17,7 @@ export class ChatterboxView extends TemplateView<ChatterboxViewModel> {
             ),
             t.mapView(
                 (vm) => vm.timelineViewModel,
-                (vm) => (vm ? new TimelineView(vm) : new LoadingView())
+                (vm) => (vm ? new TimelineView(vm, viewClassForTile) : new LoadingView())
             ),
             t.mapView(
                 (vm) => vm.messageComposerViewModel,
