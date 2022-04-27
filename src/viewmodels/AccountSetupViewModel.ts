@@ -1,3 +1,4 @@
+
 import { ViewModel, Client, LoadStatus } from "hydrogen-view-sdk";
 import { IChatterboxConfig } from "../types/IChatterboxConfig";
 import { generatePassword, generateUsername } from "../random";
@@ -25,7 +26,22 @@ export class AccountSetupViewModel extends ViewModel {
         for (let i = 0; i < maxAttempts; ++i) {
             try {
                 const username = `${this._config.username_prefix}-${generateUsername(10)}`;
-                this._registration = await this._client.startRegistration(this._homeserver, username, this._password, "Chatterbox");
+                const flowSelector = (flows) => {
+                    const allowedStages = [
+                        "m.login.registration_token",
+                        "org.matrix.msc3231.login.registration_token",
+                        "m.login.terms",
+                        "m.login.dummy"
+                    ];
+                    for (const flow of flows) {
+                        // Find the first flow that does not contain any unsupported stages
+                        const containsUnsupportedStage = flow.stages.some(stage => !allowedStages.includes(stage));
+                        if (!containsUnsupportedStage) {
+                            return flow;
+                        }
+                    }
+                }
+                this._registration = await this._client.startRegistration(this._homeserver, username, this._password, "Chatterbox", flowSelector);
                 this._startStage = await this._registration.start();
                 let stage = this._startStage;
                 while (stage && stage.type !== "m.login.terms") {
