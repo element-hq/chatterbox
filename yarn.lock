@@ -16,6 +16,11 @@ base64-arraybuffer@^0.2.0:
   resolved "https://registry.yarnpkg.com/base64-arraybuffer/-/base64-arraybuffer-0.2.0.tgz#4b944fac0191aa5907afe2d8c999ccc57ce80f45"
   integrity sha512-7emyCsu1/xiBXgQZrscw/8KPRT44I4Yq9Pe6EGs3aPRTsWuggML1/1DTuZUuIaJPIm1FTDUVXl4x/yW8s0kQDQ==
 
+core-js@^3.6.5:
+  version "3.22.2"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.22.2.tgz#3ea0a245b0895fa39d1faa15fe75d91ade504a01"
+  integrity sha512-Z5I2vzDnEIqO2YhELVMFcL1An2CIsFe9Q7byZhs8c/QxummxZlAHw33TUHbIte987LkisOgL0LwQ1P9D6VISnA==
+
 dompurify@^2.3.0:
   version "2.3.6"
   resolved "https://registry.yarnpkg.com/dompurify/-/dompurify-2.3.6.tgz#2e019d7d7617aacac07cbbe3d88ae3ad354cf875"
@@ -158,15 +163,16 @@ has@^1.0.3:
   dependencies:
     function-bind "^1.1.1"
 
-hydrogen-view-sdk@^0.0.8:
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/hydrogen-view-sdk/-/hydrogen-view-sdk-0.0.8.tgz#9c9268cc96890568406393686717729d81a28635"
-  integrity sha512-n4Lr8mZZ//hpYCtnYCsr44Ep0bg9TwCQ5C4HiK+7gGeEeZvOYBp3HMDPMLGXp2mQId9ZrbL1cBRwq1ZfHiUTGw==
+hydrogen-view-sdk@^0.0.10:
+  version "0.0.10"
+  resolved "https://registry.yarnpkg.com/hydrogen-view-sdk/-/hydrogen-view-sdk-0.0.10.tgz#be0c729db67e1d1511b7fa32aa101fd889ec9cdc"
+  integrity sha512-7Ni7ui0mQzKbz6noGDyS1ceIKjU5sjoyX6+2a5dk0nXwttrQYXJbrgblCWC3nIljQPbW+09o+t9BFE0OuBHDPw==
   dependencies:
     "@matrix-org/olm" "https://gitlab.matrix.org/api/v4/projects/27/packages/npm/@matrix-org/olm/-/@matrix-org/olm-3.2.3.tgz"
     another-json "^0.2.0"
     base64-arraybuffer "^0.2.0"
     dompurify "^2.3.0"
+    off-color "^2.0.0"
 
 is-core-module@^2.8.1:
   version "2.8.1"
@@ -179,6 +185,13 @@ nanoid@^3.2.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.0.tgz#5906f776fd886c66c24f3653e0c46fcb1d4ad6b0"
   integrity sha512-JzxqqT5u/x+/KOFSd7JP15DOo9nOoHpx6DYatqIHUW2+flybkm+mdcraotSQR5WcnZr+qhGVh8Ted0KdfSMxlg==
+
+off-color@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/off-color/-/off-color-2.0.0.tgz#ecf3bda52e9a78dde535db86361e048741a56631"
+  integrity sha512-JJ9ObbY2CzgT7F8PpdpHGNjQa7QbU8f4DkY3cCxYUq9NezYUMmL/oSofCc5MMaiUnNNBEFCc4w1unMA+R8syvw==
+  dependencies:
+    core-js "^3.6.5"
 
 path-parse@^1.0.7:
   version "1.0.7"
