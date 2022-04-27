@@ -25,7 +25,24 @@ export class AccountSetupViewModel extends ViewModel {
         for (let i = 0; i < maxAttempts; ++i) {
             try {
                 const username = `${this._config.username_prefix}-${generateUsername(10)}`;
-                this._registration = await this._client.startRegistration(this._homeserver, username, this._password, "Chatterbox");
+                const flowSelector = (flows) => {
+                    const allowedStages = [
+                        "m.login.registration_token",
+                        "org.matrix.msc3231.login.registration_token",
+                        "m.login.terms",
+                        "m.login.dummy"
+                    ];
+                    for (const flow of flows) {
+                        // Find the first flow that does not contain any unsupported stages but contains Token registration stage.
+                        const containsUnsupportedStage = flow.stages.some(stage => !allowedStages.includes(stage));
+                        const containsTokenStage = flow.stages.includes("m.login.registration_token") ||
+                            flow.stages.includes("org.matrix.msc3231.login.registration_token");
+                        if (!containsUnsupportedStage && containsTokenStage) {
+                            return flow;
+                        }
+                    }
+                }
+                this._registration = await this._client.startRegistration(this._homeserver, username, this._password, "Chatterbox", flowSelector);
                 this._startStage = await this._registration.start();
                 let stage = this._startStage;
                 while (stage && stage.type !== "m.login.terms") {
