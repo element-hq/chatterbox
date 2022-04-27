@@ -33,9 +33,11 @@ export class AccountSetupViewModel extends ViewModel {
                         "m.login.dummy"
                     ];
                     for (const flow of flows) {
-                        // Find the first flow that does not contain any unsupported stages
+                        // Find the first flow that does not contain any unsupported stages but contains Token registration stage.
                         const containsUnsupportedStage = flow.stages.some(stage => !allowedStages.includes(stage));
-                        if (!containsUnsupportedStage) {
+                        const containsTokenStage = flow.stages.includes("m.login.registration_token") ||
+                            flow.stages.includes("org.matrix.msc3231.login.registration_token");
+                        if (!containsUnsupportedStage && containsTokenStage) {
                             return flow;
                         }
                     }
