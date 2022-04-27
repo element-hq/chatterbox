@@ -1,4 +1,3 @@
-
 import { ViewModel, Client, LoadStatus } from "hydrogen-view-sdk";
 import { IChatterboxConfig } from "../types/IChatterboxConfig";
 import { generatePassword, generateUsername } from "../random";
