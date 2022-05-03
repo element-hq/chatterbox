@@ -3,11 +3,13 @@ import { RoomViewModel, ViewModel, RoomStatus} from "hydrogen-view-sdk";
 export class ChatterboxViewModel extends ViewModel {
     private _roomViewModel?: typeof RoomViewModel;
     private _loginPromise: Promise<void>;
+    private _minimize: () => void;
 
     constructor(options) {
         super(options);
         this._client = options.client;
         this._loginPromise = options.loginPromise;
+        this._minimize = options.minimize;
     }
 
     async load() {
@@ -22,13 +24,13 @@ export class ChatterboxViewModel extends ViewModel {
         else {
             throw new Error("ConfigError: You must either specify 'invite_user' or 'auto_join_room'");
         }
-        this._roomViewModel = new RoomViewModel({
+        this._roomViewModel = this.track(new RoomViewModel({
             room,
             ownUserId: this._session.userId,
             platform: this.platform,
             urlCreator: this.urlCreator,
             navigation: this.navigation,
-        });
+        }));
         await this._roomViewModel.load();
         this.emitChange("roomViewModel");
     }
@@ -85,6 +87,11 @@ export class ChatterboxViewModel extends ViewModel {
         };
         this._session.rooms.subscribe(subscription);
         return promise;
+    }
+
+    minimize() {
+        (window as any).sendMinimizeToParent();
+        this._minimize();
     }
 
     get timelineViewModel() {
