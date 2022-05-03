@@ -15,6 +15,7 @@ export class RootViewModel extends ViewModel {
     private _activeSection?: string;
     private _messageFromParent: MessageFromParent = new MessageFromParent();
     private _startMinimized: boolean;
+    private _isWatchingNotificationCount: boolean;
 
     constructor(config: IChatterboxConfig, options: Options) {
         super(options);
@@ -57,7 +58,11 @@ export class RootViewModel extends ViewModel {
                     minimize: () => this.minimizeChatterbox()
                 })
             ));
-            this._chatterBoxViewModel.load();
+            await this._chatterBoxViewModel.load();
+            if (!this._isWatchingNotificationCount) {
+                // for when chatterbox is loaded initially
+                this._watchNotificationCount();
+            }
         }
         this.emitChange("activeSection");
     }
@@ -112,6 +117,7 @@ export class RootViewModel extends ViewModel {
             },
         };
         this.track(this._client.session.rooms.subscribe(subscription));
+        this._isWatchingNotificationCount = true;
     }
     
     minimizeChatterbox() {
