@@ -29,6 +29,10 @@ async function fetchConfig(): Promise<IChatterboxConfig> {
     return config;
 }
 
+function shouldStartMinimized(): boolean {
+    return !!new URLSearchParams(window.location.search).get("minimized");
+}
+
 async function main() {
     const root = document.querySelector(rootDivId) as HTMLDivElement;
     if (!root) {
@@ -40,7 +44,8 @@ async function main() {
     const navigation = new Navigation(allowsChild);
     platform.setNavigation(navigation);
     const urlRouter = createRouter({ navigation, history: platform.history });
-    const rootViewModel = new RootViewModel(config, {platform, navigation, urlCreator: urlRouter});
+    const startMinimized = shouldStartMinimized();
+    const rootViewModel = new RootViewModel(config, {platform, navigation, urlCreator: urlRouter, startMinimized});
     rootViewModel.start();
     const rootView = new RootView(rootViewModel);
     root.appendChild(rootView.mount());
@@ -65,6 +70,10 @@ function allowsChild(parent, child) {
 
 (window as any).sendMinimizeToParent = function () {
     window.parent?.postMessage({ action: "minimize" }, "*");
+};
+
+(window as any).sendNotificationCount = function (count: number) {
+    window.parent?.postMessage({ action: "unread-message", count }, "*");
 };
 
 main();

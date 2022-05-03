@@ -10,7 +10,8 @@ export class ChatterboxView extends TemplateView<ChatterboxViewModel> {
     }
 
     render(t) {
-        return t.div({ className: "ChatterboxView" }, [
+        return t.div({ className: "ChatterboxView", },
+            [
             t.mapView(
                 (vm) => (vm.roomViewModel ? vm : null),
                 (vm) => (vm ? new RoomHeaderView(vm) : null)
@@ -39,7 +40,11 @@ class RoomHeaderView extends TemplateView<ChatterboxViewModel> {
             avatar,
             t.div({ className: "RoomHeaderView_name" }, vm => vm.roomName),
             t.div({ className: "RoomHeaderView_menu" }, [
-                t.button({ className: "RoomHeaderView_menu_minimize", onClick: () => (window as any).sendMinimizeToParent() })
+                t.button({
+                    className: "RoomHeaderView_menu_minimize", onClick: () => {
+                        vm.minimize();
+                    }
+                })
             ]),
         ]);
     }

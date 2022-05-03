@@ -17,11 +17,13 @@ export function toggleIframe() {
     if (iframeElement.style.display !== "none") {
         iframeElement.style.display = "none";
         document.querySelector(".start-chat-btn").classList.remove("start-background-minimized");
+        iframeElement.contentWindow.postMessage({ action: "minimize" }, "*");;
         if (isMobile()) {
             startButtonDiv.style.display = "block";
         }
     }
     else {
+        iframeElement.contentWindow.postMessage({ action: "maximize" }, "*");;
         iframeElement.style.display = "block";
         document.querySelector(".start-chat-btn").classList.add("start-background-minimized");
         if (isMobile()) {
