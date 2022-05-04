@@ -2,7 +2,8 @@ import { RoomViewModel, ViewModel, RoomStatus, tileClassForEntry} from "hydrogen
 
 function createCustomTileClassForEntry(ownUserId: string) {
     return function customTileClassForEntry(entry) {
-        if (entry.content?.membership === "join" && entry.sender !== ownUserId || entry.eventType !== "m.room.member") {
+        if (entry.content?.membership === "join" && entry.sender !== ownUserId ||
+            entry.eventType !== "m.room.member") {
             return tileClassForEntry(entry);
         }
         return undefined;
