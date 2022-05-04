@@ -13,13 +13,11 @@ function createCustomTileClassForEntry(ownUserId: string) {
 export class ChatterboxViewModel extends ViewModel {
     private _roomViewModel?: typeof RoomViewModel;
     private _loginPromise: Promise<void>;
-    private _minimize: () => void;
 
     constructor(options) {
         super(options);
         this._client = options.client;
         this._loginPromise = options.loginPromise;
-        this._minimize = options.minimize;
     }
 
     async load() {
@@ -102,7 +100,7 @@ export class ChatterboxViewModel extends ViewModel {
 
     minimize() {
         (window as any).sendMinimizeToParent();
-        this._minimize();
+        this.navigation.push("minimize");
     }
 
     get timelineViewModel() {

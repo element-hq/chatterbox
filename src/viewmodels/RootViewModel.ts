@@ -23,21 +23,27 @@ export class RootViewModel extends ViewModel {
         this._config = config;
         this._client = new Client(this.platform);
         this._setupNavigation();
-        this._messageFromParent.on("maximize", () => this._showTimeline(Promise.resolve()));
+        this._messageFromParent.on("maximize", () => this.start());
         // Chatterbox can be minimized via the start button on the parent page!
-        this._messageFromParent.on("minimize", () => this.minimizeChatterbox());
+        this._messageFromParent.on("minimize", () => this.navigation.push("minimize"));
     }
 
     private _setupNavigation() {
         this.navigation.observe("account-setup").subscribe(() => this._showAccountSetup());
         this.navigation.observe("timeline").subscribe((loginPromise) => this._showTimeline(loginPromise));
+        this.navigation.observe("minimize").subscribe(() => this.minimizeChatterbox());
     }
 
     async start() {
         const sessionAlreadyExists = await this.attemptStartWithExistingSession();
         if (sessionAlreadyExists) {
-            this._watchNotificationCount();
+            if (!this._isWatchingNotificationCount) {
+                this._watchNotificationCount();
+            }
             if (this._startMinimized) {
+                // when CB is maximized, this function is run again
+                // don't start in minimized state then
+                this._startMinimized = false;
                 return;
             }
             this.navigation.push("timeline");
@@ -55,7 +61,6 @@ export class RootViewModel extends ViewModel {
                     config: this._config,
                     state: this._state,
                     loginPromise,
-                    minimize: () => this.minimizeChatterbox()
                 })
             ));
             await this._chatterBoxViewModel.load();
@@ -122,6 +127,7 @@ export class RootViewModel extends ViewModel {
     
     minimizeChatterbox() {
         this._chatterBoxViewModel = this.disposeTracked(this._chatterBoxViewModel);
+        this._accountSetupViewModel = this.disposeTracked(this._chatterBoxViewModel);
         this._activeSection = "";
         this.emitChange("chatterboxViewModel");
     }

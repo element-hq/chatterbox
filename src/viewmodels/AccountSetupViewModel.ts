@@ -97,6 +97,11 @@ export class AccountSetupViewModel extends ViewModel {
         }
     }
 
+    minimize(): void {
+        (window as any).sendMinimizeToParent();
+        this.navigation.push("minimize");
+    }
+
     private get _homeserver(): string {
         return this._config.homeserver;
     }
