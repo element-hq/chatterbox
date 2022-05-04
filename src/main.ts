@@ -56,7 +56,7 @@ function allowsChild(parent, child) {
     const { type } = child;
     switch (parent?.type) {
         case undefined:
-            return type === "start" || type === "account-setup" || type === "timeline";
+            return type === "start" || type === "account-setup" || type === "timeline" || type === "minimize";
         default:
             return false;
     }
