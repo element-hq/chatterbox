@@ -34,6 +34,7 @@ function shouldStartMinimized(): boolean {
 }
 
 async function main() {
+    hideOnError();
     const root = document.querySelector(rootDivId) as HTMLDivElement;
     if (!root) {
         throw new Error("No element with id as 'chatterbox' found!");
@@ -61,6 +62,24 @@ function allowsChild(parent, child) {
     }
 }
 
+function hideOnError() {
+    // When an error occurs, log it and then hide everything!
+    const handler = e => {
+        if (e.message === "ResizeObserver loop completed with undelivered notifications." ||
+            e.message === "ResizeObserver loop limit exceeded") {
+            // see https://stackoverflow.com/a/64257593
+            e.stopImmediatePropagation();
+            return false;
+        }
+        console.error(e.error ?? e.reason);
+        (window as any).sendError();
+        return false;
+    };
+    window.addEventListener("error", handler, true);
+    window.addEventListener("unhandledrejection", handler, true);
+}
+
+
 (window as any).sendViewChangeToParent = function (view: "timeline" | "account-setup") {
     window.parent?.postMessage({
         action: "resize-iframe",
@@ -74,6 +93,10 @@ function allowsChild(parent, child) {
 
 (window as any).sendNotificationCount = function (count: number) {
     window.parent?.postMessage({ action: "unread-message", count }, "*");
+};
+
+(window as any).sendError = function () {
+    window.parent?.postMessage({ action: "error" }, "*");
 };
 
 main();

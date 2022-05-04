@@ -42,3 +42,10 @@ export function resizeIframe(data) {
     if (height) { iframeElement.style.height = height; }
     if (width) { iframeElement.style.width = width; }
 }
+
+export function removeIframe() {
+    const iframeElement = document.querySelector(".chatterbox-iframe") as HTMLIFrameElement;
+    iframeElement?.remove();
+    const startButton = document.querySelector(".start") as HTMLDivElement;
+    startButton.remove();
+}

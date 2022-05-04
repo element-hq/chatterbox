@@ -1,4 +1,4 @@
-import { resizeIframe, toggleIframe } from "./iframe";
+import { resizeIframe, toggleIframe, removeIframe } from "./iframe";
 import { loadStartButton } from "./load";
 import "./parent-style.css";
 
@@ -32,6 +32,9 @@ window.addEventListener("message", event => {
             break;
         case "unread-message":
             setUnreadCount(event.data.count);
+            break;
+        case "error":
+            removeIframe();
             break;
     }
 });
