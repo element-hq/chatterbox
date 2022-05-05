@@ -1,14 +1,5 @@
-import { RoomViewModel, ViewModel, RoomStatus, tileClassForEntry} from "hydrogen-view-sdk";
-
-function createCustomTileClassForEntry(ownUserId: string) {
-    return function customTileClassForEntry(entry) {
-        if (entry.content?.membership === "join" && entry.sender !== ownUserId ||
-            entry.eventType !== "m.room.member") {
-            return tileClassForEntry(entry);
-        }
-        return undefined;
-    }
-}
+import { RoomViewModel, ViewModel, RoomStatus } from "hydrogen-view-sdk";
+import { createCustomTileClassForEntry } from "./tiles";
 
 export class ChatterboxViewModel extends ViewModel {
     private _roomViewModel?: typeof RoomViewModel;
