@@ -3,6 +3,7 @@
     "auto_join_room": "!XOUozZcpOvneVFsrGi:matrix.midhun.dev",
     "username_prefix": "foobar",
     "header": {
+        "title": "Chatterbox Test Room",
         "avatar": "https://i.imgur.com/KkSYCKB.png"
     },
     "token": "k9SL1R~GcdbjiFjC",
