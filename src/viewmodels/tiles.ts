@@ -1,5 +1,6 @@
-import { TextTile, ImageTile, VideoTile, FileTile, LocationTile, RedactedTile, tileClassForEntry } from "hydrogen-view-sdk";
+import { TextTile, ImageTile, VideoTile, FileTile, LocationTile, RedactedTile, EncryptionEnabledTile, tileClassForEntry } from "hydrogen-view-sdk";
 
+// Override all the message-tiles to show the display name as "me"
 class ChatterboxTextTile extends TextTile {
     get displayName() {
         return this.isOwn? "me" : super.displayName;
@@ -36,6 +37,13 @@ class ChatterboxRedactedTile extends RedactedTile {
     }
 }
 
+// We don't want to show the (long and random) user-id in this announcement! 
+class ChatterboxEncryptionEnabledTile extends EncryptionEnabledTile {
+    get announcement() {
+        return this.i18n`This room is end-to-end encrypted 🔒`;
+    }
+}
+
 export function createCustomTileClassForEntry(ownUserId: string) {
     return function customTileClassForEntry(entry) {
         switch (entry.eventType) {
@@ -69,6 +77,8 @@ export function createCustomTileClassForEntry(ownUserId: string) {
                 else {
                     return undefined;
                 }
+            case "m.room.encryption":
+                return ChatterboxEncryptionEnabledTile;
             default:
                 return tileClassForEntry(entry);
 
