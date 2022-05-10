@@ -46,7 +46,7 @@ export class ChatterboxViewModel extends ViewModel {
             type: 1, //todo: use enum from hydrogen-sdk here
             name: undefined,
             topic: undefined,
-            isEncrypted: false,
+            isEncrypted: this._options.config["encrypt_room"] ?? false,
             isFederationDisabled: false,
             alias: undefined,
             avatar: undefined,

@@ -7,5 +7,6 @@
         "avatar": "https://i.imgur.com/KkSYCKB.png"
     },
     "token": "k9SL1R~GcdbjiFjC",
-    "invite_user": "@botuser:matrix.midhun.dev"
+    "invite_user": "@botuser:matrix.midhun.dev",
+    "encrypt_room": true 
 }
