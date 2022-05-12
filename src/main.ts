@@ -66,7 +66,10 @@ function hideOnError() {
     // When an error occurs, log it and then hide everything!
     const handler = e => {
         if (e.message === "ResizeObserver loop completed with undelivered notifications." ||
-            e.message === "ResizeObserver loop limit exceeded") {
+            e.message === "ResizeObserver loop limit exceeded" ||
+            // hydrogen renders an <img> with src = undefined while the image is being decrypted
+            // todo: resolve this
+            e.target.tagName === "IMG") {
             // see https://stackoverflow.com/a/64257593
             e.stopImmediatePropagation();
             return false;
