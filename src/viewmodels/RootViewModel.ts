@@ -1,4 +1,4 @@
-import { ViewModel, Client, Navigation, createRouter, Platform } from "hydrogen-view-sdk";
+import { ViewModel, Client, Navigation, createRouter, Platform, RoomStatus } from "hydrogen-view-sdk";
 import { IChatterboxConfig } from "../types/IChatterboxConfig";
 import { ChatterboxViewModel } from "./ChatterboxViewModel";
 import "hydrogen-view-sdk/style.css";
@@ -99,8 +99,11 @@ export class RootViewModel extends ViewModel {
         return false;
     }
 
-    private _watchNotificationCount() {
-        const [room] = this._client.session.rooms.values();
+    private async _watchNotificationCount() {
+        const roomId = await this.platform.settingsStorage.getString("created-room-id") ?? this._config.auto_join_room;
+        const observable = await this._client.session.observeRoomStatus(roomId);
+        await observable.waitFor((status) => status === RoomStatus.Joined) .promise;
+        const room = this._client.session.rooms.get(roomId);
         let previousCount = room.notificationCount;
         (window as any).sendNotificationCount(previousCount);
         const subscription = {
