@@ -55,6 +55,7 @@ export class ChatterboxViewModel extends ViewModel {
         const roomStatusObservable = await this._session.observeRoomStatus(roomBeingCreated.id);
         await roomStatusObservable.waitFor(status => status === (RoomStatus.BeingCreated | RoomStatus.Replaced)).promise;
         const roomId = roomBeingCreated.roomId;
+        await this.platform.settingsStorage.setString("created-room-id", roomId);
         room = this._session.rooms.get(roomId);
         return room;
     }
