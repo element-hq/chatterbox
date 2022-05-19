@@ -102,7 +102,7 @@ export class RootViewModel extends ViewModel {
     private async _watchNotificationCount() {
         const roomId = await this.platform.settingsStorage.getString("created-room-id") ?? this._config.auto_join_room;
         const observable = await this._client.session.observeRoomStatus(roomId);
-        await observable.waitFor((status) => status === RoomStatus.Joined) .promise;
+        await observable.waitFor((status) => status === RoomStatus.Joined).promise;
         const room = this._client.session.rooms.get(roomId);
         let previousCount = room.notificationCount;
         (window as any).sendNotificationCount(previousCount);
