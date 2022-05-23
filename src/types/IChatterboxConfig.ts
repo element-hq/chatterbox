@@ -13,6 +13,8 @@ export interface IChatterboxConfig {
     header: IHeader;
     // Token needed for token-authenticated registration
     token: string;
+    // URL of the image that should be used as the users avatar
+    avatar: string;
 }
 
 interface IHeader {

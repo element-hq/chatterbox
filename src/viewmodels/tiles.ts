@@ -5,11 +5,27 @@ class ChatterboxTextTile extends TextTile {
     get displayName() {
         return this.isOwn? "me" : super.displayName;
     }
+
+    get avatarLetter() { 
+        return "";
+    }
+
+    avatarUrl() {
+        return this.isOwn? this._options.config["avatar"]: null;
+    }
 }
 
 class ChatterboxImageTile extends ImageTile {
     get displayName() {
         return this.isOwn? "me" : super.displayName;
+    }
+    
+    get avatarLetter() { 
+        return "";
+    }
+
+    avatarUrl() {
+        return this.isOwn? this._options.config["avatar"]: null;
     }
 }
 
@@ -17,11 +33,27 @@ class ChatterboxVideoTile extends VideoTile {
     get displayName() {
         return this.isOwn? "me" : super.displayName;
     }
+    
+    get avatarLetter() { 
+        return "";
+    }
+
+    avatarUrl() {
+        return this.isOwn? this._options.config["avatar"]: null;
+    }
 }
 
 class ChatterboxFileTile extends FileTile {
     get displayName() {
         return this.isOwn? "me" : super.displayName;
+    }
+    
+    get avatarLetter() { 
+        return "";
+    }
+
+    avatarUrl() {
+        return this.isOwn? this._options.config["avatar"]: null;
     }
 }
 
@@ -29,11 +61,27 @@ class ChatterboxLocationTile extends LocationTile {
     get displayName() {
         return this.isOwn? "me" : super.displayName;
     }
+    
+    get avatarLetter() { 
+        return "";
+    }
+
+    avatarUrl() {
+        return this.isOwn? this._options.config["avatar"]: null;
+    }
 }
 
 class ChatterboxRedactedTile extends RedactedTile {
     get displayName() {
         return this.isOwn? "me" : super.displayName;
+    }
+    
+    get avatarLetter() { 
+        return "";
+    }
+
+    avatarUrl() {
+        return this._options.config["avatar"];
     }
 }
 
