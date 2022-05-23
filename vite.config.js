@@ -16,6 +16,7 @@ module.exports = defineConfig(({ command }) => {
                 rollupOptions: {
                     input: {
                         main: resolve(__dirname, "chatterbox.html"),
+                        demo: resolve(__dirname, "demo.html"),
                         parent: resolve(__dirname, "index.html"),
                     },
                 },

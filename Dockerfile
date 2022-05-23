@@ -14,4 +14,5 @@ FROM nginxinc/nginx-unprivileged:1.21.6
 
 COPY ./default-nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /app/target/assets /usr/share/nginx/html/assets
+COPY --from=build /app/target/demo.html /usr/share/nginx/html/demo.html
 COPY --from=build /app/target/chatterbox.html /usr/share/nginx/html/chatterbox.html
