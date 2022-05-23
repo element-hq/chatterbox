@@ -23,14 +23,14 @@ export class ChatterboxViewModel extends ViewModel {
         else {
             throw new Error("ConfigError: You must either specify 'invite_user' or 'auto_join_room'");
         }
-        this._roomViewModel = this.track(new RoomViewModel({
+        this._roomViewModel = this.track(new RoomViewModel(this.childOptions({
             room,
             ownUserId: this._session.userId,
             platform: this.platform,
             urlCreator: this.urlCreator,
             navigation: this.navigation,
             tileClassForEntry: createCustomTileClassForEntry(this._session.userId),
-        }));
+        })));
         await this._roomViewModel.load();
         this.emitChange("roomViewModel");
     }
