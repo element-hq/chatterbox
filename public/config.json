@@ -8,5 +8,6 @@
     },
     "token": "k9SL1R~GcdbjiFjC",
     "invite_user": "@botuser:matrix.midhun.dev",
-    "encrypt_room": true 
+    "encrypt_room": true,
+    "avatar": "https://i.imgur.com/FD1z37K.png"
 }
