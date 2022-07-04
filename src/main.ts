@@ -87,9 +87,9 @@ function allowsChild(parent, child) {
 function hideOnError() {
     // When an error occurs, log it and then hide everything!
     const handler = e => {
-        Sentry.captureException(e, {
-            
-        })
+        Sentry.captureException(e, { tags: {
+            "fatalError": true
+        }});
         if (e.message === "ResizeObserver loop completed with undelivered notifications." ||
             e.message === "ResizeObserver loop limit exceeded" ||
             // hydrogen renders an <img> with src = undefined while the image is being decrypted
