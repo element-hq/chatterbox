@@ -48,12 +48,12 @@ async function main() {
     if (config.sentry) {
         Sentry.init({
             dsn: config.sentry.dsn,
-            release: "my-project-name@2.3.12",
+            environment: config.sentry.environment,
             integrations: [new BrowserTracing()],
-            
         });
         Sentry.setTag("homeserver", config.homeserver);
         Sentry.setTag("encrypt_room", config.encrypt_room);
+
         if (config.invite_user) {
             Sentry.setTag("mode", "invite_user");
         } else if (config.auto_join_room) {
