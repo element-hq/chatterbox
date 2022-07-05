@@ -35,7 +35,9 @@ class PolicyAgreementView extends TemplateView<AccountSetupViewModel> {
                 ]),
             t.div({ className: "PolicyAgreementView_btn-collection" },
                 [
-                    t.button({ onClick: () => vm.completeRegistration(), className: "PolicyAgreementView_next", }, "Accept and continue to chat"),
+                    t.button({ onClick: () => vm.completeRegistration(), className: "PolicyAgreementView_next", },
+                        t.map(vm => vm.showButtonSpinner, (showButtonSpinner, t) => showButtonSpinner? t.div({ className: "loader" }): t.span("Accept and continue to chat"))
+                    ),
                     t.button({ onClick: () => vm.minimize(), className: "button-action PolicyAgreementView_cancel", }, "Cancel"),
                 ]),
         ]);

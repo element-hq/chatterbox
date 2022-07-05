@@ -11,6 +11,7 @@ export class AccountSetupViewModel extends ViewModel {
     private _password: string;
     private _registration: any;
     private _privacyPolicyLink: string;
+    private _showButtonSpinner: boolean = false;
 
     constructor(options) {
         super(options);
@@ -66,6 +67,8 @@ export class AccountSetupViewModel extends ViewModel {
     }
 
     async completeRegistration() {
+        this._showButtonSpinner = true;
+        this.emitChange("showButtonSpinner");
         let stage = this._startStage;
         while (stage) {
             if (
@@ -112,5 +115,9 @@ export class AccountSetupViewModel extends ViewModel {
 
     get footerViewModel() {
         return this.options.footerVM;
+    }
+
+    get showButtonSpinner(): boolean {
+        return this._showButtonSpinner;
     }
 }
