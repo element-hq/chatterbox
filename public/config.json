@@ -6,6 +6,10 @@
         "title": "Chatterbox Test Room",
         "avatar": "https://i.imgur.com/KkSYCKB.png"
     },
+    "footer": {
+        "chatterbox_link": "https://element.io/solutions/embedded-live-chat-for-customer-service",
+        "matrix_link": "https://matrix.org"
+    },
     "token": "k9SL1R~GcdbjiFjC",
     "invite_user": "@botuser:matrix.midhun.dev",
     "encrypt_room": true,

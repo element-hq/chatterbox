@@ -109,4 +109,8 @@ export class AccountSetupViewModel extends ViewModel {
     get privacyPolicyLink() {
         return this._privacyPolicyLink;
     }
+
+    get footerViewModel() {
+        return this.options.footerVM;
+    }
 }

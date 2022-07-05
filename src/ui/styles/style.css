@@ -99,9 +99,13 @@ body {
     margin: 10.5px 0;
 }
 
-.FooterView>div {
+.FooterView>div, .FooterView>a {
     display: flex;
     align-items: center;
+}
+
+.FooterView a {
+    text-decoration: none;
 }
 
 .FooterView_matrix-branding {

@@ -11,6 +11,8 @@ export interface IChatterboxConfig {
     encrypt_room: boolean;
     // Configurations for header on chatterbox (containing title, avatar, minimize button)
     header: IHeader;
+    // Configurations for footer on chatterbox (containing what links to use)
+    footer: IFooter;
     // Token needed for token-authenticated registration
     token: string;
     // URL of the image that should be used as the users avatar
@@ -22,4 +24,11 @@ interface IHeader {
     title?: string;
     // An optional link to static avatar. If this is not given, the room avatar is used instead
     avatar?: string;
+}
+
+interface IFooter {
+    // Specifies the link which must be opened when chatterbox logo in the footer is clicked.
+    chatterbox_link: string;
+    // Specifies the link which must be opened when matrix branding in the footer is clicked.
+    matrix_link: string;
 }
