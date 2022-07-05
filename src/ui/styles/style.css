@@ -204,3 +204,9 @@ body {
     justify-content: center;
     align-items: center;
 }
+
+.PolicyAgreementView_next .loader {
+    width: 15px;
+    height: 15px;
+    font-size: 3px;
+}
