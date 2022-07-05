@@ -3,6 +3,7 @@ import { IChatterboxConfig } from "../types/IChatterboxConfig";
 import { ChatterboxViewModel } from "./ChatterboxViewModel";
 import "hydrogen-view-sdk/style.css";
 import { AccountSetupViewModel } from "./AccountSetupViewModel";
+import { FooterViewModel } from "./FooterViewModel";
 import { MessageFromParent } from "../observables/MessageFromParent";
 
 type Options = { platform: typeof Platform, navigation: typeof Navigation, urlCreator: ReturnType<typeof createRouter>, startMinimized: boolean };
@@ -16,12 +17,14 @@ export class RootViewModel extends ViewModel {
     private _messageFromParent: MessageFromParent = new MessageFromParent();
     private _startMinimized: boolean;
     private _isWatchingNotificationCount: boolean;
+    private _footerViewModel: FooterViewModel;
 
     constructor(config: IChatterboxConfig, options: Options) {
         super(options);
         this._startMinimized = options.startMinimized;
         this._config = config;
         this._client = new Client(this.platform);
+        this._footerViewModel = new FooterViewModel(this.childOptions({ config: this._config }));
         this._setupNavigation();
         this._messageFromParent.on("maximize", () => this.start());
         // Chatterbox can be minimized via the start button on the parent page!
@@ -60,6 +63,7 @@ export class RootViewModel extends ViewModel {
                     client: this._client,
                     config: this._config,
                     state: this._state,
+                    footerVM: this._footerViewModel,
                     loginPromise,
                 })
             ));
@@ -79,6 +83,7 @@ export class RootViewModel extends ViewModel {
                 client: this._client,
                 config: this._config,
                 state: this._state,
+                footerVM: this._footerViewModel,
             })
         ));
         this.emitChange("activeSection");
