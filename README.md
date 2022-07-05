@@ -31,3 +31,16 @@ Assuming that the build output (inside `/target`) is hosted at `<root>` (eg: cha
 	</script>
 	<script src="<root>/assets/parent.js" type="module" id="chatterbox-script"></script>
 ```
+
+## Testing
+
+Chatterbox comes with a suite of integration tests, using cypress.
+
+You can run them by doing
+```sh
+yarn cypress install
+yarn cypress open
+``` 
+
+Ensure you copy the `cypress/fixtures/demoInstance.sample.json` file to `cypress/fixtures/demoInstance.json` and edit 
+the keys accordingly.
