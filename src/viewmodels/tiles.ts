@@ -10,8 +10,11 @@ class ChatterboxTextTile extends TextTile {
         return "";
     }
 
-    avatarUrl() {
-        return this.isOwn? this._options.config["avatar"]: null;
+    avatarUrl(size) {
+        if(!this.isOwn) {
+            return super.avatarUrl(size);
+        }
+        return this._options.config["avatar"] ?? null;
     }
 }
 
@@ -24,8 +27,11 @@ class ChatterboxImageTile extends ImageTile {
         return "";
     }
 
-    avatarUrl() {
-        return this.isOwn? this._options.config["avatar"]: null;
+    avatarUrl(size) {
+        if(!this.isOwn) {
+            return super.avatarUrl(size);
+        }
+        return this._options.config["avatar"] ?? null;
     }
 }
 
@@ -38,8 +44,11 @@ class ChatterboxVideoTile extends VideoTile {
         return "";
     }
 
-    avatarUrl() {
-        return this.isOwn? this._options.config["avatar"]: null;
+    avatarUrl(size) {
+        if(!this.isOwn) {
+            return super.avatarUrl(size);
+        }
+        return this._options.config["avatar"] ?? null;
     }
 }
 
@@ -52,8 +61,11 @@ class ChatterboxFileTile extends FileTile {
         return "";
     }
 
-    avatarUrl() {
-        return this.isOwn? this._options.config["avatar"]: null;
+    avatarUrl(size) {
+        if(!this.isOwn) {
+            return super.avatarUrl(size);
+        }
+        return this._options.config["avatar"] ?? null;
     }
 }
 
@@ -66,8 +78,11 @@ class ChatterboxLocationTile extends LocationTile {
         return "";
     }
 
-    avatarUrl() {
-        return this.isOwn? this._options.config["avatar"]: null;
+    avatarUrl(size) {
+        if(!this.isOwn) {
+            return super.avatarUrl(size);
+        }
+        return this._options.config["avatar"] ?? null;
     }
 }
 
@@ -80,8 +95,11 @@ class ChatterboxRedactedTile extends RedactedTile {
         return "";
     }
 
-    avatarUrl() {
-        return this._options.config["avatar"];
+    avatarUrl(size) {
+        if(!this.isOwn) {
+            return super.avatarUrl(size);
+        }
+        return this._options.config["avatar"] ?? null;
     }
 }
 
