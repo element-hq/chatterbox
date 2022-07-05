@@ -62,6 +62,10 @@ body {
     cursor: pointer;
 }
 
+.PolicyAgreementView_next[disabled] {
+    cursor: default;
+}
+
 .PolicyAgreementView_cancel {
     margin-top: 12px;
     color: #737D8C;
