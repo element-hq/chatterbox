@@ -9,17 +9,11 @@ export class FooterViewModel extends ViewModel {
         this._config = options.config;
     }
 
-    openChatterboxLink() {
-        const link = this._config.footer?.chatterbox_link;
-        if (link) {
-            (window as any).sendOpenLink(link);
-        }
+    get chatterboxLink(): string {
+        return this._config.footer?.chatterbox_link ?? null;
     }
 
-    openMatrixLink() {
-        const link = this._config.footer?.matrix_link;
-        if (link) {
-            (window as any).sendOpenLink(link);
-        }
+    get matrixLink(): string {
+        return this._config.footer?.matrix_link ?? null;
     }
 }

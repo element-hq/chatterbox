@@ -102,8 +102,4 @@ function hideOnError() {
     window.parent?.postMessage({ action: "error" }, "*");
 };
 
-(window as any).sendOpenLink = function (link: string) {
-    window.parent?.postMessage({ action: "open-link", link }, "*");
-};
-
 main();

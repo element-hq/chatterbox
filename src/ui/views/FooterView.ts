@@ -11,20 +11,24 @@ export class FooterView extends TemplateView<FooterViewModel> {
         return t.div({ className: "FooterView" }, [
             t.div([
                 t.img({ src: chatterboxLogo, className: "FooterView_logo" }),
-                t.button(
+                t.a(
                     {
                         className: "FooterView_chatterbox-branding",
-                        onClick: () => vm.openChatterboxLink(),
+                        href: vm.chatterboxLink,
+                        target: "_top",
+                        rel: "noopener"
                     },
                     "Chatterbox"
                 ),
             ]),
-            t.button(
+            t.a(
                 {
                     className: "FooterView_matrix-branding",
-                    onClick: () => vm.openMatrixLink(),
+                    href: vm.matrixLink,
+                    target: "_top",
+                    rel: "noopener"
                 },
-                ["Powered by Matrix"]
+                "Powered by Matrix"
             ),
         ]);
     }

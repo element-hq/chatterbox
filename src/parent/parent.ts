@@ -36,9 +36,6 @@ window.addEventListener("message", event => {
         case "error":
             removeIframe();
             break;
-        case "open-link":
-            window.open(event.data.link, "_blank");
-            break;
     }
 });
 

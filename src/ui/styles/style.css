@@ -99,15 +99,13 @@ body {
     margin: 10.5px 0;
 }
 
-.FooterView>div, .FooterView>button {
+.FooterView>div, .FooterView>a {
     display: flex;
     align-items: center;
 }
 
-.FooterView button {
-    background: none;
-    border: none;
-    cursor: pointer;
+.FooterView a {
+    text-decoration: none;
 }
 
 .FooterView_matrix-branding {
