@@ -13,7 +13,7 @@ export class AccountSetupView extends TemplateView<AccountSetupViewModel> {
             { className: "AccountSetupView" },
             [
             t.mapView((vm) => vm.privacyPolicyLink, (link) => link ? new PolicyAgreementView(vm) : new LoadingView()),
-            t.view(new FooterView()),
+            t.view(new FooterView(vm.footerViewModel)),
             ]
         );
     }

@@ -9,7 +9,7 @@ export class ChatterboxView extends TemplateView<ChatterboxViewModel> {
         super(value);
     }
 
-    render(t) {
+    render(t, vm) {
         return t.div({ className: "ChatterboxView", },
             [
             t.mapView(
@@ -24,7 +24,7 @@ export class ChatterboxView extends TemplateView<ChatterboxViewModel> {
                 (vm) => vm.messageComposerViewModel,
                 (vm) => (vm ? new MessageComposer(vm) : null)
             ),
-            t.view(new FooterView()),
+            t.view(new FooterView(vm.footerViewModel)),
         ]);
     }
 }
