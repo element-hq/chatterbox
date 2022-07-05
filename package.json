@@ -11,6 +11,8 @@
     "vite": "^2.9.13"
   },
   "dependencies": {
+    "@sentry/browser": "^7.5.0",
+    "@sentry/tracing": "^7.5.0",
     "hydrogen-view-sdk": "^0.0.13"
   }
 }

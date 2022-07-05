@@ -17,6 +17,13 @@ export interface IChatterboxConfig {
     token: string;
     // URL of the image that should be used as the users avatar
     avatar: string;
+    // Configure this to enable Sentry (sentry.io) tracing.
+    sentry?: {
+        // The DSN URL where Sentry reports will be sent.
+        dsn: string;
+        // The environment to report to Sentry. E.g. "staging", "production"
+        environment: string;
+    }
 }
 
 interface IHeader {
