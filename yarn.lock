@@ -39,9 +39,9 @@
     debug "^3.1.0"
     lodash.once "^4.1.1"
 
-"@matrix-org/olm@https://gitlab.matrix.org/api/v4/projects/27/packages/npm/@matrix-org/olm/-/@matrix-org/olm-3.2.3.tgz":
-  version "3.2.3"
-  resolved "https://gitlab.matrix.org/api/v4/projects/27/packages/npm/@matrix-org/olm/-/@matrix-org/olm-3.2.3.tgz#cc332fdd25c08ef0e40f4d33fc3f822a0f98b6f4"
+"@matrix-org/olm@https://gitlab.matrix.org/api/v4/projects/27/packages/npm/@matrix-org/olm/-/@matrix-org/olm-3.2.8.tgz":
+  version "3.2.8"
+  resolved "https://gitlab.matrix.org/api/v4/projects/27/packages/npm/@matrix-org/olm/-/@matrix-org/olm-3.2.8.tgz#8d53636d045e1776e2a2ec6613e57330dd9ce856"
 
 "@sentry/browser@^7.5.0":
   version "7.5.0"
@@ -798,12 +798,12 @@ human-signals@^1.1.1:
   resolved "https://registry.yarnpkg.com/human-signals/-/human-signals-1.1.1.tgz#c5b1cd14f50aeae09ab6c59fe63ba3395fe4dfa3"
   integrity sha512-SEQu7vl8KjNL2eoGBLF3+wAjpsNfA9XMlXAYj/3EdaNfAlxKthD1xjEQfGOUhllCGGJVNY34bRr6lPINhNjyZw==
 
-hydrogen-view-sdk@^0.0.13:
-  version "0.0.13"
-  resolved "https://registry.yarnpkg.com/hydrogen-view-sdk/-/hydrogen-view-sdk-0.0.13.tgz#31e15592e241f7c39f432c84c2f32d3c122d9e9f"
-  integrity sha512-aHBuXI3bq5Ad54e3Fq04mA/DZ/E4II8p+UT2q8dGvZX6bs6QGdmNE1+Nt9E/7ukYTie90oOrejB2hLFL+hb/nA==
+hydrogen-view-sdk@^0.0.14:
+  version "0.0.14"
+  resolved "https://registry.yarnpkg.com/hydrogen-view-sdk/-/hydrogen-view-sdk-0.0.14.tgz#36dc876989ed57b98bf9999bf993f121f24a72b4"
+  integrity sha512-jZWXab9fVKus9mze/NRvcmZlA1u/oVvsfqgg5fcaVVk2OuIaZwCtnTkHOBp4fRvjVhKIfikN03szqZZZMaK2YA==
   dependencies:
-    "@matrix-org/olm" "https://gitlab.matrix.org/api/v4/projects/27/packages/npm/@matrix-org/olm/-/@matrix-org/olm-3.2.3.tgz"
+    "@matrix-org/olm" "https://gitlab.matrix.org/api/v4/projects/27/packages/npm/@matrix-org/olm/-/@matrix-org/olm-3.2.8.tgz"
     another-json "^0.2.0"
     base64-arraybuffer "^0.2.0"
     dompurify "^2.3.0"
