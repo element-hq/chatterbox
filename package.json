@@ -8,7 +8,7 @@
   },
   "devDependencies": {
     "typescript": "^4.4.4",
-    "vite": "^2.7.2"
+    "vite": "^2.9.13"
   },
   "dependencies": {
     "hydrogen-view-sdk": "^0.0.13"
