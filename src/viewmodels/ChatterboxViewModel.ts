@@ -37,9 +37,9 @@ export class ChatterboxViewModel extends ViewModel {
 
     private async createRoomWithUserSpecifiedInConfig() {
         const userId = this._options.config["invite_user"];
-        let room = this._session.findDirectMessageForUserId(userId);
+        let room = await this.findPreviouslyCreatedRoom();
         if (room) {
-            // we already have a DM with this user
+            // we already have a room with this user
             return room;
         }
         const roomBeingCreated = this._session.createRoom({
@@ -56,6 +56,7 @@ export class ChatterboxViewModel extends ViewModel {
         await roomStatusObservable.waitFor(status => status === (RoomStatus.BeingCreated | RoomStatus.Replaced)).promise;
         const roomId = roomBeingCreated.roomId;
         await this.platform.settingsStorage.setString("created-room-id", roomId);
+        await this.platform.settingsStorage.setString("invite-user", userId);
         room = this._session.rooms.get(roomId);
         return room;
     }
@@ -88,6 +89,16 @@ export class ChatterboxViewModel extends ViewModel {
         };
         this._session.rooms.subscribe(subscription);
         return promise;
+    }
+    
+    private async findPreviouslyCreatedRoom(): Promise<string | null> {
+        const createdRoomId = await this.platform.settingsStorage.getString("created-room-id");
+        const lastKnownInviteUserId = await this.platform.settingsStorage.getString("invite-user");
+        const currentInviteUserId = this._options.config["invite_user"];
+        if (createdRoomId && lastKnownInviteUserId === currentInviteUserId) {
+            return this._session.rooms.get(createdRoomId);
+        }
+        return null;
     }
 
     minimize() {
