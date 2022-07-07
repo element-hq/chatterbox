@@ -38,7 +38,7 @@ export class ChatterboxView extends TemplateView<ChatterboxViewModel> {
             ),
             t.mapView(
                 (vm) => vm.messageComposerViewModel,
-                (vm) => (vm ? new MessageComposer(vm) : null)
+                (vm) => (vm.kind === "composer" ? new MessageComposer(vm) : new WaitingForOperatorJoinView())
             ),
             t.view(new FooterView(vm.footerViewModel)),
         ]);
@@ -63,5 +63,16 @@ class RoomHeaderView extends TemplateView<ChatterboxViewModel> {
                 })
             ]),
         ]);
+    }
+}
+
+class WaitingForOperatorJoinView extends TemplateView {
+    render(t) {
+        return t.div({ className: "WaitingForOperatorJoinView" }, [
+            t.div({ className: "FakeComposerContainer" }, [
+                t.span("Waiting for operator to join "),
+                t.div({ className: "loader" })]
+            )]
+        );
     }
 }

@@ -25,6 +25,7 @@ export class ChatterboxViewModel extends ViewModel {
         super(options);
         this._client = options.client;
         this._loginPromise = options.loginPromise;
+        this.emitOnRoomViewModelChange = this.emitOnRoomViewModelChange.bind(this);
     }
 
     async load() {
@@ -48,11 +49,17 @@ export class ChatterboxViewModel extends ViewModel {
             tileClassForEntry: createCustomTileClassForEntry(this._session.userId),
         })));
         await this._roomViewModel.load();
+        this._roomViewModel.on("change", this.emitOnRoomViewModelChange);
+        this.emitChange("roomViewModel");
+    }
+
+    private emitOnRoomViewModelChange() {
         this.emitChange("roomViewModel");
     }
 
     private async createRoomWithUserSpecifiedInConfig() {
         const userId = this._options.config["invite_user"];
+        const ownUserId = this._session.userId;
         let room = await this.findPreviouslyCreatedRoom();
         if (room) {
             // we already have a room with this user
@@ -67,6 +74,15 @@ export class ChatterboxViewModel extends ViewModel {
             alias: undefined,
             avatar: undefined,
             invites: [userId],
+            powerLevelContentOverride: {
+                users: {
+                    [userId]: 100,
+                    [ownUserId]: 60
+                },
+                events: {
+                    "m.room.message": 80,
+                }
+            },
         });
         const roomStatusObservable = await this._session.observeRoomStatus(roomBeingCreated.id);
         await roomStatusObservable.waitFor(status => status === (RoomStatus.BeingCreated | RoomStatus.Replaced)).promise;
@@ -107,7 +123,7 @@ export class ChatterboxViewModel extends ViewModel {
         return promise;
     }
     
-    private async findPreviouslyCreatedRoom(): Promise<string | null> {
+    private async findPreviouslyCreatedRoom(): Promise<any | null> {
         const createdRoomId = await this.platform.settingsStorage.getString("created-room-id");
         const lastKnownInviteUserId = await this.platform.settingsStorage.getString("invite-user");
         const currentInviteUserId = this._options.config["invite_user"];
@@ -115,6 +131,11 @@ export class ChatterboxViewModel extends ViewModel {
             return this._session.rooms.get(createdRoomId);
         }
         return null;
+    }
+
+    dispose() {
+        super.dispose();
+        this._roomViewModel.off("change", this.emitOnRoomViewModelChange);
     }
 
     minimize() {
