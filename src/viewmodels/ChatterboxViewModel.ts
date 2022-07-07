@@ -65,6 +65,15 @@ export class ChatterboxViewModel extends ViewModel {
             // we already have a room with this user
             return room;
         }
+        const powerLevelContent = this._options.config["disable_composer_until_operator_join"] ? {
+            users: {
+                [userId]: 100,
+                [ownUserId]: 60
+            },
+            events: {
+                "m.room.message": 80,
+            }
+        } : null;    
         const roomBeingCreated = this._session.createRoom({
             type: 1, //todo: use enum from hydrogen-sdk here
             name: undefined,
@@ -74,15 +83,7 @@ export class ChatterboxViewModel extends ViewModel {
             alias: undefined,
             avatar: undefined,
             invites: [userId],
-            powerLevelContentOverride: {
-                users: {
-                    [userId]: 100,
-                    [ownUserId]: 60
-                },
-                events: {
-                    "m.room.message": 80,
-                }
-            },
+            powerLevelContentOverride: powerLevelContent,
         });
         const roomStatusObservable = await this._session.observeRoomStatus(roomBeingCreated.id);
         await roomStatusObservable.waitFor(status => status === (RoomStatus.BeingCreated | RoomStatus.Replaced)).promise;
