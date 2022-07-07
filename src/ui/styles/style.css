@@ -214,3 +214,31 @@ body {
     height: 15px;
     font-size: 3px;
 }
+
+.WaitingForOperatorJoinView {
+    display: flex;
+    justify-content: center;
+}
+
+.FakeComposerContainer {
+    display: flex;
+    background: #FFFFFF;
+    border: 1px solid #E3E8F0;
+    border-radius: 8px;
+    width: 351px;
+    height: 56px;
+    box-sizing: border-box;
+    align-items: center;
+}
+
+.FakeComposerContainer .loader {
+    width: 15px;
+    height: 15px;
+    margin: 0 0 0 10px;
+    font-size: 2px;
+}
+
+.FakeComposerContainer span {
+    margin-left: 14px;
+    color: #737D8C;
+}
