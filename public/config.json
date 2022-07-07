@@ -1,17 +1,17 @@
 {
-    "homeserver": "https://matrix.midhun.dev",
-    "auto_join_room": "!XOUozZcpOvneVFsrGi:matrix.midhun.dev",
+    "homeserver": "https://your-homeserver.com",
+    "auto_join_room": "Internal matrix id of the room",
     "username_prefix": "foobar",
     "header": {
-        "title": "Chatterbox Test Room",
-        "avatar": "https://i.imgur.com/KkSYCKB.png"
+        "title": "Your Fancy Title",
+        "avatar": "https://link_to_avatar/awesome.png"
     },
     "footer": {
         "chatterbox_link": "https://element.io/solutions/embedded-live-chat-for-customer-service",
         "matrix_link": "https://matrix.org"
     },
-    "token": "k9SL1R~GcdbjiFjC",
-    "invite_user": "@botuser:matrix.midhun.dev",
-    "encrypt_room": true,
-    "avatar": "https://i.imgur.com/FD1z37K.png"
+    "token": "Valid Token to be used with Token Authenticated Registration",
+    "invite_user": "@botuser:your-homeserver.com",
+    "encrypt_room": false,
+    "avatar": "https://link_to_avatar/avatar.png"
 }
