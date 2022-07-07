@@ -23,6 +23,9 @@ export interface IChatterboxConfig {
     // If specified, chatterbox will create a dm with this user
     // This option takes precedence over 'auto_join_room'
     invite_user: string;
+    // If set to true, chatterbox will not let the user send any messages until the operator has joined
+    // Only applicable when invite_user is configured 
+    disable_composer_until_operator_join: boolean;
     // If set to true, the room created for DM is encrypted
     encrypt_room: boolean;
     // Configurations for header on chatterbox (containing title, avatar, minimize button)
