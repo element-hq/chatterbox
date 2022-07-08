@@ -13,5 +13,6 @@
     "token": "Valid Token to be used with Token Authenticated Registration",
     "invite_user": "@botuser:your-homeserver.com",
     "encrypt_room": false,
-    "avatar": "https://link_to_avatar/avatar.png"
+    "avatar": "https://link_to_avatar/avatar.png",
+    "disable_composer_until_operator_join": true
 }
