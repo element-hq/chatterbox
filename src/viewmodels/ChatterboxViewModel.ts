@@ -72,7 +72,8 @@ export class ChatterboxViewModel extends ViewModel {
             },
             events: {
                 "m.room.message": 80,
-            }
+            },
+            redact: 90
         } : null;    
         const roomBeingCreated = this._session.createRoom({
             type: 1, //todo: use enum from hydrogen-sdk here
