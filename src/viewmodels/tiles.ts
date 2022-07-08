@@ -153,7 +153,8 @@ export function createCustomTileClassForEntry(ownUserId: string) {
                         return undefined;
                 }
             case "m.room.member":
-                if (entry.content?.membership === "join" && entry.sender !== ownUserId) {
+                if ((entry.content?.membership === "join" || entry.content?.membership === "leave")
+                    && entry.sender !== ownUserId) {
                     return tileClassForEntry(entry);
                 }
                 else {
