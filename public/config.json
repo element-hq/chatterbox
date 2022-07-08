@@ -7,7 +7,7 @@
         "avatar": "https://link_to_avatar/awesome.png"
     },
     "footer": {
-        "chatterbox_link": "https://element.io/solutions/embedded-live-chat-for-customer-service",
+        "chatterbox_link": "https://element.io/solutions/chatterbox-embedded-live-chat-for-customer-service",
         "matrix_link": "https://matrix.org"
     },
     "token": "Valid Token to be used with Token Authenticated Registration",
