@@ -1,4 +1,13 @@
+Chatterbox
+==========
+
 Chatterbox lets you securely embed [Hydrogen](https://github.com/vector-im/hydrogen-web) within any website.
+
+
+<p align="center">
+  <img alt="Chatterbox client screenshot" src="https://user-images.githubusercontent.com/2072976/178049551-14caddbe-4b06-4dfe-bc44-bab10603c632.png" />
+</p>
+
     
 ### Develop Instructions
 ---
