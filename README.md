@@ -8,6 +8,13 @@ Chatterbox lets you securely embed [Hydrogen](https://github.com/vector-im/hydro
   <img alt="Chatterbox client screenshot" src="https://user-images.githubusercontent.com/2072976/178049551-14caddbe-4b06-4dfe-bc44-bab10603c632.png" />
 </p>
 
+
+### Requirements
+
+To use Chatterbox you will need:
+
+- A homeserver which supports [Token-authenticated registration](https://spec.matrix.org/v1.3/client-server-api/#token-authenticated-registration). Currently the only known implementation is [Synapse](https://github.com/matrix-org/synapse).
+- An account on that homeserver which can create registration tokens. Synapse requires the account to be an admin.
     
 ### Develop Instructions
 ---
@@ -53,3 +60,34 @@ yarn cypress open
 
 Ensure you copy the `cypress/fixtures/demoInstance.sample.json` file to `cypress/fixtures/demoInstance.json` and edit 
 the keys accordingly.
+
+## Homeserver requirements & configuration
+
+Chatterbox makes use of the [Token-authenticated registration](https://spec.matrix.org/v1.3/client-server-api/#token-authenticated-registration) feature,
+and as such your homeserver implementation will need to support it.
+
+### Synapse
+
+Synapse has supported this feature since at least 1.52.0. You can enable token registration in homeserver config with:
+
+```yaml
+registration_requires_token: true
+```
+
+You will also need to manually create a registration token with the [create token API](https://matrix-org.github.io/synapse/latest/usage/administration/admin_api/registration_tokens.html#create-token).
+You must use the access token of an administatator for this. See [the Synapse documentation](https://matrix-org.github.io/synapse/latest/usage/administration/admin_api/index.html) for help.
+
+```sh
+$ curl --data '{ "uses_allowed": 50 }' -H 'Authorization: Bearer YOUR_ADMIN_TOKEN' 'https://your-homeserver/_synapse/admin/v1/registration_tokens/new'
+200 OK
+{
+    "token": "defg",
+    "uses_allowed": 50,
+    "pending": 0,
+    "completed": 0,
+    "expiry_time": null
+}
+```
+
+Note that you can use `uses_allowed` to set how many chatterbox users can register via this token before no more will be permitted.
+You can then use the value of `token` in the response inside your `config.json`.
