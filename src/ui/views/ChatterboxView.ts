@@ -38,7 +38,7 @@ export class ChatterboxView extends TemplateView<ChatterboxViewModel> {
             ),
             t.mapView(
                 (vm) => vm.messageComposerViewModel,
-                (vm) => (vm.kind === "composer" ? new MessageComposer(vm) : new WaitingForOperatorJoinView())
+                (vm) => (vm?.kind === "composer" ? new MessageComposer(vm) : new WaitingForOperatorJoinView())
             ),
             t.view(new FooterView(vm.footerViewModel)),
         ]);
