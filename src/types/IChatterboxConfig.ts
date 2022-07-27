@@ -24,7 +24,10 @@ export interface IChatterboxConfig {
     // This option takes precedence over 'auto_join_room'
     invite_user: string;
     // If set to true, chatterbox will not let the user send any messages until the operator has joined
-    // Only applicable when invite_user is configured 
+    // Only applicable when invite_user is configured
+    // The CB user is given a powerlevel that is low enough to prevent them from sending messages
+    // The invited user must bump the powerlevel for the CB user to 80 after they join
+    // The composer will be disabled until this happens!
     disable_composer_until_operator_join: boolean;
     // If set to true, the room created for DM is encrypted
     encrypt_room: boolean;
