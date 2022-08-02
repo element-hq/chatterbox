@@ -798,10 +798,10 @@ human-signals@^1.1.1:
   resolved "https://registry.yarnpkg.com/human-signals/-/human-signals-1.1.1.tgz#c5b1cd14f50aeae09ab6c59fe63ba3395fe4dfa3"
   integrity sha512-SEQu7vl8KjNL2eoGBLF3+wAjpsNfA9XMlXAYj/3EdaNfAlxKthD1xjEQfGOUhllCGGJVNY34bRr6lPINhNjyZw==
 
-hydrogen-view-sdk@^0.0.15:
-  version "0.0.15"
-  resolved "https://registry.yarnpkg.com/hydrogen-view-sdk/-/hydrogen-view-sdk-0.0.15.tgz#2c8302fc6e3ad6147efe66e6ceba3a93f8cdd14e"
-  integrity sha512-qmXiw3EeQ6J/9IYfh/nc/fsFUa+TRx81+dk5E7p4QkDDWjWWvw60rdpObxD2iKi/DOhM9s0QvE2RyrnHxWkmdA==
+hydrogen-view-sdk@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/hydrogen-view-sdk/-/hydrogen-view-sdk-0.1.0.tgz#564af3a14030a988d4870e036044824b1fcb33b7"
+  integrity sha512-BkQ7PdWxK/vZRsxsChjaByTUEp7FoB96Dya6fpldUv9OAVZE8kyW/z2Xh4chR1mMMf9SrjYLThXZQs+sHvWWFg==
   dependencies:
     "@matrix-org/olm" "https://gitlab.matrix.org/api/v4/projects/27/packages/npm/@matrix-org/olm/-/@matrix-org/olm-3.2.8.tgz"
     another-json "^0.2.0"

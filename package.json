@@ -19,6 +19,6 @@
   "dependencies": {
     "@sentry/browser": "^7.5.0",
     "@sentry/tracing": "^7.5.0",
-    "hydrogen-view-sdk": "^0.0.15"
+    "hydrogen-view-sdk": "^0.1.0"
   }
 }
