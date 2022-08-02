@@ -19,6 +19,7 @@ import { loadStartButton } from "./load";
 import "./parent-style.css";
 
 (window as any).isIframeLoaded = false;
+(window as any).__chatterbox = () => (document.querySelector(".chatterbox-iframe") as HTMLIFrameElement)?.contentWindow;
 
 function setUnreadCount(count) {
     const notification = document.querySelector(".notification-badge") as HTMLSpanElement;
