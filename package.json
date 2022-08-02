@@ -1,6 +1,6 @@
 {
   "name": "chatterbox",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Chatterbox lets you securely embed the Hydrogen matrix client on any website!",
   "repository": "git@github.com:vector-im/chatterbox.git",
   "author": "matrix.org",
