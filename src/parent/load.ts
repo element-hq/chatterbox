@@ -40,6 +40,7 @@ export function loadStartButton() {
 function createStartButton() {
     const button = document.createElement("button");
     button.className = "start-chat-btn";
+    button.setAttribute('aria-label', 'Start chat');
     button.onclick = () => (window as any).isIframeLoaded? toggleIframe() : loadIframe();
     button.appendChild(createNotificationBadge());
     return button;
