@@ -12,6 +12,11 @@ module.exports = defineConfig(({ command }) => {
     } else {
         return {
             // build specific config
+
+            // The default base is "/", which results in absolute links being generated, e.g. /assets/foo.js.
+            // However, we want to be able to serve chatterbox from a directory which isn't the server's root.
+            // By setting base to an empty string, relative links are generated, e.g. assets/foo.js.
+            base: "",
             build: {
                 rollupOptions: {
                     input: {
