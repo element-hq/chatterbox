@@ -49,7 +49,7 @@ export class RootViewModel extends ViewModel {
 
     private _setupNavigation() {
         this.navigation.observe("account-setup").subscribe(() => this._showAccountSetup());
-        this.navigation.observe("timeline").subscribe((loginPromise) => this._showTimeline(loginPromise));
+        this.navigation.observe("timeline").subscribe((setupSessionPromise) => this._showTimeline(setupSessionPromise));
         this.navigation.observe("minimize").subscribe(() => this.minimizeChatterbox());
     }
 
