@@ -79,7 +79,12 @@ async function main() {
         }
     }
 
-    const platform = new Platform({container: root, assetPaths, config: {}, options: { development: import.meta.env.DEV }});
+    const platform = new Platform({
+        container: root,
+        assetPaths,
+        config: { themeManifests: [] },
+        options: { development: import.meta.env.DEV },
+    });
     attachLogExportToWindow(platform);
     const navigation = new Navigation(allowsChild);
     platform.setNavigation(navigation);
