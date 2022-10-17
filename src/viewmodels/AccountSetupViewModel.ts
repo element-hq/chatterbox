@@ -24,7 +24,6 @@ export class AccountSetupViewModel extends ViewModel {
     private _config: IChatterboxConfig;
     private _client: typeof Client;
     private _startStage?: any;
-    private _password: string;
     private _registration: any;
     private _privacyPolicyLink: string;
     private _showButtonSpinner: boolean = false;
@@ -37,7 +36,7 @@ export class AccountSetupViewModel extends ViewModel {
     }
 
     private async _startRegistration(): Promise<void> {
-        this._password = generatePassword(10);
+        const password = generatePassword(10);
         const maxAttempts = 10;
         for (let i = 0; i < maxAttempts; ++i) {
             try {
@@ -59,7 +58,7 @@ export class AccountSetupViewModel extends ViewModel {
                         }
                     }
                 }
-                this._registration = await this._client.startRegistration(this._homeserver, username, this._password, "Chatterbox", flowSelector);
+                this._registration = await this._client.startRegistration(this._homeserver, username, password, "Chatterbox", flowSelector);
                 this._startStage = await this._registration.start();
                 let stage = this._startStage;
                 while (stage && stage.type !== "m.login.terms") {
@@ -95,14 +94,12 @@ export class AccountSetupViewModel extends ViewModel {
             }
             stage = await this._registration.submitStage(stage);
         }
-        const loginPromise = this.login(this._password);
-        this.navigation.push("timeline", loginPromise);
+        const promise = this.setupSession();
+        this.navigation.push("timeline", promise);
     }
 
-    async login(password: string): Promise<void> {
-        const loginOptions = await this._client.queryLogin(this._homeserver).result;
-        const username = this._registration.sessionInfo.user_id;
-        this._client.startWithLogin(loginOptions.password(username, password));
+    async setupSession(): Promise<void> {
+        this._client.startWithAuthData(this._registration.authData);
         await this._client.loadStatus.waitFor((status: string) => {
             return status === LoadStatus.Ready ||
                 status === LoadStatus.Error ||
