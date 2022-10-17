@@ -6,7 +6,7 @@
   "author": "matrix.org",
   "license": "Apache-2.0",
   "scripts": {
-    "start": "vite",
+    "start": "vite --port 5400",
     "build": "tsc && vite build && vite build --config parent-vite.config.js && scripts/after-build.sh",
     "preview": "vite preview"
   },
@@ -19,6 +19,6 @@
   "dependencies": {
     "@sentry/browser": "^7.5.0",
     "@sentry/tracing": "^7.5.0",
-    "hydrogen-view-sdk": "^0.1.0"
+    "hydrogen-view-sdk": "^0.1.1"
   }
 }
