@@ -13,7 +13,7 @@ Chatterbox lets you securely embed [Hydrogen](https://github.com/vector-im/hydro
 
 To use Chatterbox you will need:
 
-- A homeserver which supports [Token-authenticated registration](https://spec.matrix.org/v1.3/client-server-api/#token-authenticated-registration). Currently the only known implementation is [Synapse](https://github.com/matrix-org/synapse) (which is available as a service from [element.io](https://element.io)).
+- A homeserver which supports [Token-authenticated registration](https://spec.matrix.org/v1.6/client-server-api/#token-authenticated-registration). Currently the only known implementation is [Synapse](https://github.com/matrix-org/synapse) (which is available as a service from [element.io](https://element.io)).
 - An account on that homeserver which can create registration tokens. Synapse requires the account to be an admin.
     
 ### Develop Instructions
