@@ -75,7 +75,7 @@ registration_requires_token: true
 ```
 
 You will also need to manually create a registration token with the [create token API](https://matrix-org.github.io/synapse/latest/usage/administration/admin_api/registration_tokens.html#create-token).
-You must use the access token of an administatator for this. See [the Synapse documentation](https://matrix-org.github.io/synapse/latest/usage/administration/admin_api/index.html) for help.
+You must use the access token of an administrator for this. See [the Synapse documentation](https://matrix-org.github.io/synapse/latest/usage/administration/admin_api/index.html) for help.
 
 ```sh
 $ curl --data '{ "uses_allowed": 50 }' -H 'Authorization: Bearer YOUR_ADMIN_TOKEN' 'https://your-homeserver/_synapse/admin/v1/registration_tokens/new'
