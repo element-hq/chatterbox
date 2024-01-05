@@ -6,3 +6,4 @@ target
 *.local
 release
 .idea
+.vscode/settings.json

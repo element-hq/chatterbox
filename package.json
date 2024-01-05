@@ -19,6 +19,7 @@
   "dependencies": {
     "@sentry/browser": "^7.5.0",
     "@sentry/tracing": "^7.5.0",
-    "hydrogen-view-sdk": "^0.1.1"
+    "hydrogen-view-sdk": "^0.1.1",
+    "matrix-js-sdk": "^30.3.0"
   }
 }

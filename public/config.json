@@ -1,18 +1,18 @@
 {
-    "homeserver": "https://your-homeserver.com",
-    "auto_join_room": "Internal matrix id of the room",
+    "homeserver": "https://matrix-client.matrix.org",
+    "auto_join_room": "!vItKLiveJxzwiDjAEl:matrix.org",
     "username_prefix": "foobar",
     "header": {
         "title": "Your Fancy Title",
-        "avatar": "https://link_to_avatar/awesome.png"
+        "avatar": "https://matrix-client.matrix.org/_matrix/media/v3/thumbnail/matrix.org/pOxXnmBxTrZWNBHMcOWTbOuq?width=384&height=384&method=crop"
     },
     "footer": {
         "chatterbox_link": "https://element.io/solutions/chatterbox-embedded-live-chat-for-customer-service",
         "matrix_link": "https://matrix.org"
     },
-    "token": "Valid Token to be used with Token Authenticated Registration",
-    "invite_user": "@botuser:your-homeserver.com",
+    "token": "",
+    "invite_user": false,
     "encrypt_room": false,
-    "avatar": "https://link_to_avatar/avatar.png",
-    "disable_composer_until_operator_join": false 
+    "avatar": "https://matrix-client.matrix.org/_matrix/media/v3/thumbnail/matrix.org/pOxXnmBxTrZWNBHMcOWTbOuq?width=384&height=384&method=crop",
+    "disable_composer_until_operator_join": false
 }

@@ -31,10 +31,12 @@ export class ChatterboxViewModel extends ViewModel {
     async load() {
         // wait until login is completed
         await this._loginPromise;
+        // const room = this._session.createJoinedRoom('!WgzDiBfTafnriySPvK:matrix.org')
         let room;
+        // console.log('findDirectMessageForUserId', room)
         if (this._options.config["invite_user"]) {
             room = await this.createRoomWithUserSpecifiedInConfig();
-        } else if(this._options.config["auto_join_room"]) {
+        } else if (this._options.config["auto_join_room"]) {
             room = await this.joinRoomSpecifiedInConfig();
         }
         else {
@@ -74,7 +76,7 @@ export class ChatterboxViewModel extends ViewModel {
                 "m.room.message": 80,
             },
             redact: 90
-        } : null;    
+        } : null;
         const roomBeingCreated = this._session.createRoom({
             type: 1, //todo: use enum from hydrogen-sdk here
             name: undefined,
@@ -103,7 +105,7 @@ export class ChatterboxViewModel extends ViewModel {
             await this._session.joinRoom(roomId);
             // even though we've joined the room, we need to wait till the next sync to get the room
             await this._waitForRoomFromSync(roomId);
-            room = this._session.rooms.get(roomId); 
+            room = this._session.rooms.get(roomId);
         }
         return room;
     }
@@ -112,7 +114,7 @@ export class ChatterboxViewModel extends ViewModel {
         let resolve: () => void;
         const promise: Promise<void> = new Promise(r => { resolve = r; })
         const subscription = {
-            onAdd: (_: string, value: {id: string}) => {
+            onAdd: (_: string, value: { id: string }) => {
                 if (value.id === roomId) {
                     this._session.rooms.unsubscribe(subscription);
                     resolve();
@@ -124,7 +126,7 @@ export class ChatterboxViewModel extends ViewModel {
         this._session.rooms.subscribe(subscription);
         return promise;
     }
-    
+
     private async findPreviouslyCreatedRoom(): Promise<any | null> {
         const createdRoomId = await this.platform.settingsStorage.getString("created-room-id");
         const lastKnownInviteUserId = await this.platform.settingsStorage.getString("invite-user");
@@ -152,7 +154,7 @@ export class ChatterboxViewModel extends ViewModel {
     get messageComposerViewModel() {
         return this._roomViewModel?.composerViewModel;
     }
-    
+
     get roomViewModel() {
         return this._roomViewModel;
     }
