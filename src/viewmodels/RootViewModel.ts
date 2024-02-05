@@ -94,14 +94,16 @@ export class RootViewModel extends ViewModel {
 
     private _showAccountSetup() {
         this._activeSection = "account-setup";
-        this._accountSetupViewModel = this.track(new AccountSetupViewModel(
-            this.childOptions({
-                client: this._client,
-                config: this._config,
-                state: this._state,
-                footerVM: this._footerViewModel,
-            })
-        ));
+        if(!this._accountSetupViewModel) {
+            this._accountSetupViewModel = this.track(new AccountSetupViewModel(
+                this.childOptions({
+                    client: this._client,
+                    config: this._config,
+                    state: this._state,
+                    footerVM: this._footerViewModel,
+                })
+            ));
+        }
         this.emitChange("activeSection");
     }
 
